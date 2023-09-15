@@ -1,0 +1,447 @@
+.App {
+    text-align: center;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: white; /*#282c34*/
+    min-height: 100vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    min-width: 100vw;
+    max-height: 100vh;
+    max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #282c34;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* NAVBAR */
+.navbar {
+    background-color: #282c34;
+    min-width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    font-size: 26px;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.companyLogo {
+    /*margin-right: auto !important;*/
+    font-size: 40px !important;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    padding: 0 20px;
+    margin: 0 20px;
+}
+
+.navbar li {
+    list-style-type: none;
+    text-align: center;
+}
+
+.navbar h1 {
+    display: inline-block;
+}
+/* END OF NAVBAR */
+
+/* LANDING PAGE */
+.landingRegisterLink {
+    border-radius: 5px;
+    margin: 0 10px;
+    padding: 10px;
+    border: 2px solid #282c34;
+    color: black;
+    box-shadow: 1px 2px 5px 2px #12121247;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.landingLoginLink {
+    border-radius: 5px;
+    margin: 0 10px;
+    padding: 10px;
+    background: #282c34;
+    color: white;
+    border: none;
+    box-shadow: 1px 2px 5px 2px #12121247;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 20px;
+}
+/* END OF LANDING PAGE */
+
+/* LOGIN PAGE */
+form {
+    text-align: center;
+}
+
+input {
+    /* display: block !important; */
+    /* padding: 5px; */
+    /* margin: 10px auto; */
+    border: none;
+    padding: 0 20px;
+}
+
+.loginContainer {
+    padding: 20px 40px;
+    border: 2px solid #282c34;
+    border-radius: 10px;
+    text-align: center !important;
+}
+
+.loginInput {
+    padding: 15px 10px !important;
+    font-size: 20px;
+}
+
+.loginUserContainer {
+    border: 2px solid rgba(105, 105, 105, 0.365);
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.loginUserIcon {
+    display: inline-block;
+    border-right: 2px solid rgba(105, 105, 105, 0.365);
+    padding: 15px;
+}
+
+.loginUserEmail {
+    display: inline-block;
+    border-right: 2px solid rgba(105, 105, 105, 0.365);
+    padding: 15px 13px;
+}
+
+.loginPasswordIcon {
+    display: inline-block;
+    border-right: 2px solid rgba(105, 105, 105, 0.365);
+    padding: 15px 13px;
+}
+
+.loginLinkContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    margin: 20px 10px;
+}
+
+.loginPostLink {
+    border-radius: 5px;
+    padding: 10px;
+    background: #282c34;
+    color: white;
+    border: none;
+    box-shadow: 1px 2px 5px 2px #12121247;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 20px;
+    margin-left: auto;
+}
+
+/* END OF LOGIN PAGE */
+
+/* USERS PAGE */
+.userInformation {
+    /* border: 2px solid gray; */
+    padding: 20px;
+}
+
+.testing {
+    height: 100%;
+    display: flex;
+    width: 100%;
+    flex-grow: 1;
+    /* margin-top: 80px; */
+}
+
+.column1 {
+    border-right: 2px solid rgba(199, 199, 199, 0.384);
+    display: flex;
+    flex-direction: column;
+}
+
+.column3image {
+    flex: 0 0 5%;
+}
+
+.column2 {
+    background: white;
+    border-right: 2px solid rgba(199, 199, 199, 0.384);
+}
+
+.column3 {
+    background: rgba(225, 225, 225, 0.218);
+    display: flex;
+    flex-direction: column;
+}
+
+.column3dash {
+    background: rgba(225, 225, 225, 0.218);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.columnItems {
+    padding: 15px;
+    font-size: 20px;
+}
+
+.columnItems2 {
+    padding: 15px;
+    font-size: 20px;
+
+    display: flex;
+    flex-direction: row;
+
+    border-bottom: 2px solid rgba(199, 199, 199, 0.384);
+}
+
+.item1 {
+    flex-grow: 1;
+}
+
+.item2 {
+    flex: 0 0 20%;
+    text-align: right;
+    font-size: 30px;
+}
+
+.messageGroup {
+    flex: 0 0 7%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-bottom: 2px solid rgba(199, 199, 199, 0.384);
+}
+
+.hover {
+    color: rgba(216, 125, 255, 0.859);
+    cursor: pointer;
+}
+
+.hover:hover {
+    color: rgba(216, 125, 255, 0.517);
+}
+
+.hover2 {
+    color: rgba(90, 90, 90, 0.859);
+    cursor: pointer;
+}
+
+.hover2:hover {
+    color: rgba(90, 90, 90, 0.448);
+}
+
+.messageBody {
+    /* flex: 0 0 83%; */
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    overflow: auto;
+    height: 88vh !important;
+}
+
+.messageInput {
+    flex: 0 0 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    background-color: white;
+    border-top: 2px solid rgba(199, 199, 199, 0.384);
+}
+
+.emojiButton {
+    flex: 0 0 5%;
+    text-align: center;
+}
+
+.attatchmentButton {
+    flex: 0 0 5%;
+    text-align: center;
+}
+
+.sendButton {
+    flex: 0 0 5%;
+    text-align: center;
+}
+
+.sendInput {
+    padding: 15px 0px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(140, 140, 140, 0.469);
+    flex: 0 0 84%;
+    text-indent: 15px;
+}
+
+.sendInput2 {
+    padding: 15px 0px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(140, 140, 140, 0.469);
+    flex: 0 0 2%;
+    width: 80%;
+    margin: 20px auto 0 auto;
+    text-indent: 15px;
+}
+
+.md-form.mt-0 {
+    display: inline-flex;
+    width: 500px;
+}
+
+.material-icons.mdc-button__icon {
+    position: absolute;
+    top: 7px;
+    left: 2px;
+}
+
+.incomingMessage {
+    background-color: white;
+    /* margin: 10px 0px; */
+    border-radius: 10px;
+    /* padding: 10px 0px; */
+    display: inline-block;
+    border: 1px solid rgba(140, 140, 140, 0.121);
+    margin: 10px 10px 0px 10px;
+    padding: 5px 10px;
+}
+
+.incomingMessageTime {
+    border-radius: 10px;
+    width: 25%;
+    margin: 5px 10px 10px 10px;
+    font-size: 16px;
+}
+
+.userImage {
+    flex: 0 0 10%;
+    text-align: center;
+}
+
+.userName {
+    flex: 0 0 76%;
+}
+
+.chatSettingsButton {
+    flex: 0 0 7%;
+    text-align: center;
+}
+
+.chatExpandButton {
+    flex: 0 0 7%;
+    text-align: center;
+}
+
+.active {
+    background-color: rgba(216, 125, 255, 0.517);
+    color: white !important;
+}
+
+.messageUser {
+    /* background-color: rgba(216, 125, 255, 0.517); */
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    overflow: auto;
+    height: 91.5vh !important;
+}
+
+.messageUser2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.messageUser3 {
+    display: flex;
+    flex-direction: row;
+}
+
+.messageUser2name {
+    flex: 0 0 58%;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.messageUser2messageTime {
+    flex: 0 0 30%;
+    text-align: right;
+
+    padding: 10px 0;
+}
+
+.messageUser3userMessage {
+    flex: 0 0 80%;
+    text-align: left;
+}
+
+.messageUser3messageNumber {
+    flex: 0 0 20%;
+    text-align: center;
+}
+
+.groupContainer {
+    /* margin: 10px 0; */
+}
+
+.dialogWindow {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    background-color: white;
+    position: absolute;
+    right: 11px;
+    padding: 10px;
+}
