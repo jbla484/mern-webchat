@@ -44,6 +44,7 @@ function Login(props) {
                         value={formData.email}
                         required
                         className='loginInput'
+                        autoFocus
                     ></input>
                 </div>
                 <div className='loginUserContainer'>
@@ -67,16 +68,10 @@ function Login(props) {
                     ></input>
                 </div>
                 <div className='loginLinkContainer'>
-                    <Link
-                        to='/recover'
-                        className='recoverLink'
-                    >
+                    <Link to='/recover' className='recoverLink'>
                         Forgot Password
                     </Link>
-                    <button
-                        to='/'
-                        className='loginPostLink'
-                    >
+                    <button to='/' className='loginPostLink'>
                         Login
                     </button>
                 </div>
@@ -85,10 +80,7 @@ function Login(props) {
                         <p style={{ margin: '0', paddingBottom: '5px' }}>
                             Don't have an account?
                         </p>
-                        <Link
-                            className='registerLink'
-                            onClick={() => {}}
-                        >
+                        <Link className='registerLink' onClick={() => {}}>
                             Sign Up
                         </Link>
                     </div>

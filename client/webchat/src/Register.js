@@ -49,6 +49,7 @@ function Register(props) {
                         value={formData.name}
                         required
                         className='loginInput'
+                        autoFocus
                     ></input>
                 </div>
 
@@ -111,10 +112,7 @@ function Register(props) {
                 </div>
 
                 <div className='loginLinkContainer'>
-                    <button
-                        to='/'
-                        className='loginPostLink'
-                    >
+                    <button to='/' className='loginPostLink'>
                         Submit
                     </button>
                 </div>

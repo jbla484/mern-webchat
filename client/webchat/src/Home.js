@@ -13,6 +13,7 @@ function Home() {
         loggedIn: false,
         username: '',
         currentPage: 'dashboard',
+        groupSubPage: '',
         selectedGroupId: '',
         selectedSubGroup: '',
         columnSizes: ['15%', '0%', '85%'],
@@ -41,7 +42,6 @@ function Home() {
     }
 
     function onGroupMessage(messages) {
-        console.log(messages);
         setServerInfo((serverInfo) => ({
             ...serverInfo,
             listOfMessages: messages,
@@ -61,6 +61,8 @@ function Home() {
 
     function onUserLogin(arg) {
         console.log('onUserLogin');
+        console.log(arg);
+
         setUserInfo((userInfo) => ({
             ...userInfo,
             userId: arg._id,
@@ -83,6 +85,8 @@ function Home() {
     }
 
     function onGroupGet(arg) {
+        console.log('Groups get:');
+        console.log(arg);
         setServerInfo((serverInfo) => ({
             ...serverInfo,
             listOfOpenGroups: arg,
@@ -105,6 +109,22 @@ function Home() {
         }));
     }
 
+    function onGroupEditName(arg) {
+        console.log(arg);
+        setServerInfo((serverInfo) => ({
+            ...serverInfo,
+            listOfOpenGroups: arg,
+        }));
+    }
+
+    function onGroupEditImage(arg) {
+        console.log(arg);
+        setServerInfo((serverInfo) => ({
+            ...serverInfo,
+            listOfOpenGroups: arg,
+        }));
+    }
+
     useEffect(() => {
         socket.on('connect', onConnect);
         socket.on('disconnect', onDisconnect);
@@ -117,6 +137,8 @@ function Home() {
         socket.on('group_join', onGroupJoin);
         socket.on('group_leave', onGroupJoin);
         socket.on('group_messages_get', onGroupMessagesGet);
+        socket.on('group_edit_name', onGroupEditName);
+        socket.on('group_edit_image', onGroupEditImage);
 
         return function cleanup() {
             socket.removeListener('connect');
@@ -130,16 +152,20 @@ function Home() {
             socket.removeListener('group_join');
             socket.removeListener('group_leave');
             socket.removeListener('group_messages_get');
+            socket.removeListener('group_edit_name');
+            socket.removeListener('group_edit_image');
         };
     }, []);
 
-    // const scrollToBottom = () => {
-    //     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    // };
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        // var elem = document.getElementById('data');
+        // messagesEndRef.scrollTop = messagesEndRef.scrollHeight;
+    };
 
-    // useEffect(() => {
-    //     scrollToBottom();
-    // }, [serverInfo.listOfMessages]);
+    useEffect(() => {
+        scrollToBottom();
+    }, [serverInfo.listOfMessages]);
 
     const [formData, setFormData] = useState({
         attatchment: '',
@@ -168,6 +194,9 @@ function Home() {
         };
 
         socket.emit('group_message_add', message);
+
+        const input = document.getElementsByClassName('sendInput')[0];
+        input.value = '';
     }
 
     async function onJoinGroup(e) {
@@ -234,6 +263,34 @@ function Home() {
             time[0] = +time[0] % 12 || 12; // Adjust hours
         }
         return time.join(''); // return adjusted time or original string
+    }
+
+    function editGroupName(e) {
+        //pop up form and pull new name from it
+
+        const info = {
+            userId: userInfo.userId,
+            groupId: userInfo.selectedGroupId,
+            newName: formData.name,
+        };
+
+        console.log(info);
+
+        socket.emit('group_edit_name', info);
+    }
+
+    function editGroupImage(e) {
+        //pop up form and pull new name from it
+
+        const info = {
+            userId: userInfo.userId,
+            groupId: userInfo.selectedGroupId,
+            newUrl: formData.url,
+        };
+
+        console.log(info);
+
+        socket.emit('group_edit_image', info);
     }
 
     return (
@@ -465,7 +522,7 @@ function Home() {
                                 )}
                             </>
                         )}
-
+                    {/* TODO: change group add to subpage */}
                     {(userInfo.currentPage === 'groups' ||
                         userInfo.currentPage === 'group_add') &&
                         !userInfo.fullScreen &&
@@ -528,16 +585,7 @@ function Home() {
                                                         >
                                                             <b>{group.name}</b>
                                                         </div>
-                                                        <div
-                                                            style={{
-                                                                textAlign:
-                                                                    'left',
-                                                                marginLeft:
-                                                                    '10px',
-                                                                textOverflow:
-                                                                    'ellipsis',
-                                                            }}
-                                                        >
+                                                        <div className='groupLastMessage'>
                                                             {group.lastMessage}
                                                         </div>
                                                     </div>
@@ -625,13 +673,7 @@ function Home() {
                                             >
                                                 <b>{group.name}</b>
                                             </div>
-                                            <div
-                                                style={{
-                                                    textAlign: 'left',
-                                                    marginLeft: '10px',
-                                                    textOverflow: 'ellipsis',
-                                                }}
-                                            >
+                                            <div className='groupLastMessage'>
                                                 {group.lastMessage}
                                             </div>
                                         </div>
@@ -810,19 +852,36 @@ function Home() {
                                     >
                                         <i className='fa-solid fa-gear hover'></i>
                                     </div>
-                                </div>
 
-                                <div className='messageBody'>
                                     {userInfo.groupSettingsVisible && (
                                         <div className='dialogWindow'>
                                             <div
                                                 className='hover'
-                                                style={{ padding: '10px' }}
-                                                onClick={(e) =>
-                                                    console.log(
-                                                        'TODO: Edit group name'
-                                                    )
-                                                }
+                                                style={{ padding: '20px' }}
+                                                onClick={(e) => {
+                                                    if (
+                                                        userInfo.groupSubPage ===
+                                                        'edit_name'
+                                                    ) {
+                                                        setUserInfo(
+                                                            (userInfo) => ({
+                                                                ...userInfo,
+                                                                groupSubPage:
+                                                                    '',
+                                                            })
+                                                        );
+                                                    } else {
+                                                        setUserInfo(
+                                                            (userInfo) => ({
+                                                                ...userInfo,
+                                                                groupSubPage:
+                                                                    'edit_name',
+                                                            })
+                                                        );
+                                                    }
+
+                                                    // editGroupName();
+                                                }}
                                             >
                                                 <i
                                                     className='fa-solid fa-signature'
@@ -830,17 +889,34 @@ function Home() {
                                                         paddingRight: '10px',
                                                     }}
                                                 ></i>
-                                                Edit group name
+                                                Edit group Name
                                             </div>
 
                                             <div
                                                 className='hover'
-                                                style={{ padding: '10px' }}
-                                                onClick={(e) =>
-                                                    console.log(
-                                                        'TODO: Edit group image'
-                                                    )
-                                                }
+                                                style={{ padding: '20px' }}
+                                                onClick={(e) => {
+                                                    if (
+                                                        userInfo.groupSubPage ===
+                                                        'edit_image'
+                                                    ) {
+                                                        setUserInfo(
+                                                            (userInfo) => ({
+                                                                ...userInfo,
+                                                                groupSubPage:
+                                                                    '',
+                                                            })
+                                                        );
+                                                    } else {
+                                                        setUserInfo(
+                                                            (userInfo) => ({
+                                                                ...userInfo,
+                                                                groupSubPage:
+                                                                    'edit_image',
+                                                            })
+                                                        );
+                                                    }
+                                                }}
                                             >
                                                 <i
                                                     className='fa-solid fa-image'
@@ -853,7 +929,7 @@ function Home() {
 
                                             <div
                                                 className='hover'
-                                                style={{ padding: '10px' }}
+                                                style={{ padding: '20px' }}
                                                 onClick={(e) => onLeaveGroup(e)}
                                             >
                                                 <i
@@ -867,7 +943,7 @@ function Home() {
 
                                             <div
                                                 className='hover'
-                                                style={{ padding: '10px' }}
+                                                style={{ padding: '20px' }}
                                                 onClick={(e) =>
                                                     console.log(
                                                         'TODO: Delete group clicked'
@@ -884,71 +960,373 @@ function Home() {
                                             </div>
                                         </div>
                                     )}
-                                    {group.messages.map((message) => {
-                                        console.log(message);
-                                        return (
-                                            <div>
+                                    {userInfo.groupSubPage === 'edit_name' &&
+                                        [1].map((throwaway) => {
+                                            console.log('show edit group name');
+                                            return (
                                                 <div
-                                                    className='incomingMessage'
-                                                    key={message._id}
+                                                    className='loginContainer'
+                                                    style={{
+                                                        position: 'fixed',
+                                                        top: '30%',
+                                                        zIndex: '22',
+                                                        backgroundColor:
+                                                            'white',
+                                                    }}
+                                                >
+                                                    <h1>
+                                                        Edit your group name
+                                                    </h1>
+                                                    <form
+                                                        onSubmit={(e) => {
+                                                            e.preventDefault();
+                                                            editGroupName();
+                                                        }}
+                                                    >
+                                                        <div className='loginUserContainer'>
+                                                            <div className='loginUserIcon'>
+                                                                <i className='fa-solid fa-user-group'></i>
+                                                            </div>
+
+                                                            <input
+                                                                type='text'
+                                                                placeholder='Name'
+                                                                onChange={(e) =>
+                                                                    setFormData(
+                                                                        {
+                                                                            ...formData,
+                                                                            name: e
+                                                                                .target
+                                                                                .value,
+                                                                        }
+                                                                    )
+                                                                }
+                                                                value={
+                                                                    formData.name
+                                                                }
+                                                                required
+                                                                className='loginInput'
+                                                            ></input>
+                                                        </div>
+
+                                                        <div className='loginLinkContainer'>
+                                                            <button
+                                                                to='/'
+                                                                className='loginPostLink'
+                                                            >
+                                                                Submit
+                                                            </button>
+                                                        </div>
+
+                                                        <div className='loginRegisterContainer'>
+                                                            <p
+                                                                style={{
+                                                                    margin: '0 auto',
+                                                                    paddingBottom:
+                                                                        '5px',
+                                                                    width: '60%',
+                                                                }}
+                                                            >
+                                                                Want to join a
+                                                                group instead?
+                                                                Look in the
+                                                                group tab to the
+                                                                left to find
+                                                                open groups.
+                                                            </p>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            );
+                                        })}
+
+                                    {userInfo.groupSubPage === 'edit_image' &&
+                                        [1].map((throwaway) => {
+                                            return (
+                                                <div
+                                                    className='loginContainer'
+                                                    style={{
+                                                        position: 'fixed',
+                                                        top: '30%',
+                                                        zIndex: '22',
+                                                        backgroundColor:
+                                                            'white',
+                                                    }}
+                                                >
+                                                    <h1>
+                                                        Edit your group image
+                                                    </h1>
+                                                    <form
+                                                        onSubmit={(e) => {
+                                                            e.preventDefault();
+                                                            editGroupImage();
+                                                        }}
+                                                    >
+                                                        <div className='loginUserContainer'>
+                                                            <div className='loginUserIcon'>
+                                                                <i className='fa-solid fa-user-group'></i>
+                                                            </div>
+
+                                                            <input
+                                                                type='text'
+                                                                placeholder='Gravatar URL'
+                                                                onChange={(e) =>
+                                                                    setFormData(
+                                                                        {
+                                                                            ...formData,
+                                                                            url: e
+                                                                                .target
+                                                                                .value,
+                                                                        }
+                                                                    )
+                                                                }
+                                                                value={
+                                                                    formData.url
+                                                                }
+                                                                required
+                                                                className='loginInput'
+                                                            ></input>
+                                                        </div>
+
+                                                        <div className='loginLinkContainer'>
+                                                            <button
+                                                                to='/'
+                                                                className='loginPostLink'
+                                                            >
+                                                                Submit
+                                                            </button>
+                                                        </div>
+
+                                                        <div className='loginRegisterContainer'>
+                                                            <p
+                                                                style={{
+                                                                    margin: '0 auto',
+                                                                    paddingBottom:
+                                                                        '5px',
+                                                                    width: '60%',
+                                                                }}
+                                                            >
+                                                                Want to join a
+                                                                group instead?
+                                                                Look in the
+                                                                group tab to the
+                                                                left to find
+                                                                open groups.
+                                                            </p>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            );
+                                        })}
+                                </div>
+
+                                <div
+                                    className='messageBody'
+                                    style={{
+                                        position: 'relative',
+                                        transform: 'translateZ(0)',
+                                    }}
+                                >
+                                    {/* {userInfo.groupSettingsVisible && (
+                                        <div className='dialogWindow'>
+                                            <div
+                                                className='hover'
+                                                style={{ padding: '20px' }}
+                                                onClick={(e) => {
+                                                    if (
+                                                        userInfo.groupSubPage ===
+                                                        'edit_name'
+                                                    ) {
+                                                        setUserInfo(
+                                                            (userInfo) => ({
+                                                                ...userInfo,
+                                                                groupSubPage:
+                                                                    '',
+                                                            })
+                                                        );
+                                                    } else {
+                                                        setUserInfo(
+                                                            (userInfo) => ({
+                                                                ...userInfo,
+                                                                groupSubPage:
+                                                                    'edit_name',
+                                                            })
+                                                        );
+                                                    }
+
+                                                    // editGroupName();
+                                                }}
+                                            >
+                                                <i
+                                                    className='fa-solid fa-signature'
+                                                    style={{
+                                                        paddingRight: '10px',
+                                                    }}
+                                                ></i>
+                                                Edit group Name
+                                            </div>
+
+                                            <div
+                                                className='hover'
+                                                style={{ padding: '20px' }}
+                                                onClick={(e) => {
+                                                    if (
+                                                        userInfo.groupSubPage ===
+                                                        'edit_image'
+                                                    ) {
+                                                        setUserInfo(
+                                                            (userInfo) => ({
+                                                                ...userInfo,
+                                                                groupSubPage:
+                                                                    '',
+                                                            })
+                                                        );
+                                                    } else {
+                                                        setUserInfo(
+                                                            (userInfo) => ({
+                                                                ...userInfo,
+                                                                groupSubPage:
+                                                                    'edit_image',
+                                                            })
+                                                        );
+                                                    }
+                                                }}
+                                            >
+                                                <i
+                                                    className='fa-solid fa-image'
+                                                    style={{
+                                                        paddingRight: '10px',
+                                                    }}
+                                                ></i>
+                                                Edit group image
+                                            </div>
+
+                                            <div
+                                                className='hover'
+                                                style={{ padding: '20px' }}
+                                                onClick={(e) => onLeaveGroup(e)}
+                                            >
+                                                <i
+                                                    className='fa-solid fa-door-open'
+                                                    style={{
+                                                        paddingRight: '10px',
+                                                    }}
+                                                ></i>
+                                                Leave Group
+                                            </div>
+
+                                            <div
+                                                className='hover'
+                                                style={{ padding: '20px' }}
+                                                onClick={(e) =>
+                                                    console.log(
+                                                        'TODO: Delete group clicked'
+                                                    )
+                                                }
+                                            >
+                                                <i
+                                                    className='fa-solid fa-trash'
+                                                    style={{
+                                                        paddingRight: '10px',
+                                                    }}
+                                                ></i>
+                                                Delete group
+                                            </div>
+                                        </div>
+                                    )} */}
+                                    {serverInfo.listOfMessages.map(
+                                        (message) => {
+                                            return (
+                                                <div
+                                                    className={
+                                                        message.userId ===
+                                                        userInfo.userId
+                                                            ? 'textRight'
+                                                            : ''
+                                                    }
                                                 >
                                                     <div
-                                                        style={{
-                                                            display:
-                                                                'inline-block',
-                                                        }}
+                                                        className={
+                                                            message.userId ===
+                                                            userInfo.userId
+                                                                ? 'incomingMessageUser'
+                                                                : 'incomingMessageOther'
+                                                        }
+                                                        key={message._id}
                                                     >
-                                                        <img
-                                                            src={message.avatar}
-                                                            height={'40px'}
-                                                            width={'40px'}
-                                                            alt='profile'
+                                                        <div
                                                             style={{
-                                                                borderRadius:
-                                                                    '20px',
-                                                                marginRight:
-                                                                    '10px',
+                                                                display:
+                                                                    'inline-block',
                                                             }}
-                                                        ></img>
+                                                        >
+                                                            <img
+                                                                src={
+                                                                    message.avatar
+                                                                }
+                                                                height={'40px'}
+                                                                width={'40px'}
+                                                                alt='profile'
+                                                                style={{
+                                                                    borderRadius:
+                                                                        '20px',
+                                                                    marginRight:
+                                                                        '10px',
+                                                                }}
+                                                            ></img>
+                                                        </div>
+                                                        <div
+                                                            style={{
+                                                                display:
+                                                                    'inline-block',
+                                                            }}
+                                                        >
+                                                            <h3
+                                                                style={{
+                                                                    padding:
+                                                                        '0px',
+                                                                    margin: '0',
+                                                                }}
+                                                            >
+                                                                {
+                                                                    message.username
+                                                                }
+                                                            </h3>
+                                                            <p
+                                                                style={{
+                                                                    padding:
+                                                                        '0px',
+                                                                    margin: '0',
+                                                                }}
+                                                            >
+                                                                {
+                                                                    message.message
+                                                                }
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                     <div
-                                                        style={{
-                                                            display:
-                                                                'inline-block',
-                                                        }}
+                                                        className={
+                                                            message.userId ===
+                                                            userInfo.userId
+                                                                ? 'incomingMessageTimeUser'
+                                                                : 'incomingMessageTimeOther'
+                                                        }
                                                     >
-                                                        <h3
-                                                            style={{
-                                                                padding: '0px',
-                                                                margin: '0',
-                                                            }}
-                                                        >
-                                                            {message.username}
-                                                        </h3>
-                                                        <p
-                                                            style={{
-                                                                padding: '0px',
-                                                                margin: '0',
-                                                            }}
-                                                        >
-                                                            {message.message}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div className='incomingMessageTime'>
-                                                    <div>
-                                                        {tConvert(
-                                                            dateReadable(
-                                                                new Date(
-                                                                    message.created
+                                                        <div>
+                                                            {tConvert(
+                                                                dateReadable(
+                                                                    new Date(
+                                                                        message.created
+                                                                    )
                                                                 )
-                                                            )
-                                                        )}
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        );
-                                    })}
+                                            );
+                                        }
+                                    )}
                                     <div
                                         className='scroll'
                                         ref={messagesEndRef}

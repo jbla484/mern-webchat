@@ -1,0 +1,20 @@
+Groups:
+	- User can join group (COMPLETE)
+	- User can leave group (COMPLETE)
+	- User can send a group message
+		- recent group message and time doesnt update
+		- we need abetter method for when a user opens the group chat
+	- All users receieve group messages at once 
+		- add the time stamp and message container within a wrapper container (cleaner ui)
+		- recent group messages have overflow y, needs to be hidden with ...
+	- Owner of group can delete group
+		- make sure no other people can delete it
+		- update database to hold owner id
+		- what if owners account no longer exists?
+	
+Messages:
+
+Friends or followers?:
+	- User can follow other people
+		- update database to hold array of followed people, as well as followers
+		

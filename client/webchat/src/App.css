@@ -264,12 +264,12 @@ input {
 }
 
 .hover {
-    color: rgba(216, 125, 255, 0.859);
+    color: rgba(255, 60, 112, 0.614);
     cursor: pointer;
 }
 
 .hover:hover {
-    color: rgba(216, 125, 255, 0.517);
+    color: rgba(255, 60, 112, 0.813);
 }
 
 .hover2 {
@@ -347,7 +347,19 @@ input {
     left: 2px;
 }
 
-.incomingMessage {
+.incomingMessageUser {
+    background-color: rgba(255, 60, 112, 0.614);
+    /* margin: 10px 0px; */
+    border-radius: 10px;
+    /* padding: 10px 0px; */
+    display: inline-block;
+    border: 1px solid rgba(140, 140, 140, 0.121);
+    margin: 10px 10px 0px 10px;
+    padding: 5px 10px;
+    text-align: left;
+}
+
+.incomingMessageOther {
     background-color: white;
     /* margin: 10px 0px; */
     border-radius: 10px;
@@ -358,11 +370,20 @@ input {
     padding: 5px 10px;
 }
 
-.incomingMessageTime {
+.incomingMessageTimeUser {
     border-radius: 10px;
-    width: 25%;
     margin: 5px 10px 10px 10px;
     font-size: 16px;
+}
+
+.incomingMessageTimeOther {
+    border-radius: 10px;
+    margin: 5px 10px 10px 10px;
+    font-size: 16px;
+}
+
+.textRight {
+    text-align: right;
 }
 
 .userImage {
@@ -385,12 +406,12 @@ input {
 }
 
 .active {
-    background-color: rgba(216, 125, 255, 0.517);
+    background-color: rgba(255, 60, 112, 0.614);
     color: white !important;
 }
 
 .messageUser {
-    /* background-color: rgba(216, 125, 255, 0.517); */
+    /* background-color: rgba(125, 255, 225, 0.859); */
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -413,6 +434,16 @@ input {
     flex: 0 0 58%;
     text-align: center;
     padding: 10px 0;
+}
+
+.groupLastMessage {
+    margin-left: 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+    width: 250px;
+    display: block;
+    overflow: hidden
 }
 
 .messageUser2messageTime {
@@ -442,6 +473,15 @@ input {
     margin-left: auto;
     background-color: white;
     position: absolute;
-    right: 11px;
+    right: 0;
+    top: 61px;
     padding: 10px;
+    z-index: 21;
 }
+
+
+@media screen and (min-width: 480px) {
+    body {
+      background-color: lightgreen;
+    }
+  }

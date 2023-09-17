@@ -128,6 +128,7 @@ io.on('connection', (socket) => {
         group.users.push(user);
         await group.save();
 
+        console.log(`User ${user.username} has joined group ${group.name}`);
         socket.emit('group_join', user.joinedGroups);
     });
 
@@ -160,20 +161,25 @@ io.on('connection', (socket) => {
             return;
         }
 
-        console.log();
-
+        console.log(user.joinedGroups);
         // Update the users joined groups
-        user.joinedGroups = user.joinedGroups.filter(
-            (joinedgroup) => joinedgroup.toString() !== group._id.toString()
-        );
+        user.joinedGroups = user.joinedGroups.filter((joinedgroupid) => {
+            console.log(group.name, joinedgroupid, group._id);
+            return joinedgroupid.toString() !== group._id.toString();
+        });
         await user.save();
 
         // Update the groups users
-        group.users = group.users.filter(
-            (groupuser) => groupuser.toString() !== user._id
-        );
+        group.users = group.users.filter((groupuserid) => {
+            // console.log(groupuserid, group._id);
+            return groupuserid.toString() !== user._id.toString();
+        });
         await group.save();
 
+        // TODO: navigate away to group home screen instead of showing the chats
+
+        console.log(`User ${user.username} has left group ${group.name}`);
+        console.log(user.joinedGroups);
         socket.emit('group_leave', user.joinedGroups);
     });
 
@@ -242,7 +248,7 @@ io.on('connection', (socket) => {
             await group.save();
 
             console.log(
-                `Group message successfully logged --- ${groupMessage.username}:${groupMessage.message}`
+                `Group message successfully logged --- ${groupMessage.username} : ${groupMessage.message}`
             );
 
             // Return the new user to the client
@@ -266,6 +272,94 @@ io.on('connection', (socket) => {
 
             // Return the new user to the client
             socket.emit('group_messages_get', group.messages);
+        } catch (err) {
+            console.error(err.message);
+            socket.emit('error', err.message);
+        }
+    });
+
+    socket.on('group_edit_name', async (arg) => {
+        // Get the data from the request body
+        let { userId, groupId, newName } = arg;
+
+        // console.log(groupMessage);
+
+        try {
+            let group = await GroupModel.findOne({ name: newName });
+            if (group) {
+                socket.emit('error', 'Group with that name already exists.');
+                return;
+            }
+
+            group = await GroupModel.findOne({ _id: groupId });
+            if (!group) {
+                socket.emit('error', 'Group does not exist.');
+                return;
+            }
+
+            let user = await UserModel.findOne({ _id: userId });
+            if (!user) {
+                socket.emit('error', 'User account does not exist.');
+                return;
+            }
+
+            group.name = newName;
+            await group.save();
+
+            console.log(`Group name successfully updated --- ${group.name}`);
+
+            let groups = await GroupModel.find({});
+
+            if (!groups) {
+                socket.emit('error', 'Could not get groups.');
+                return;
+            }
+
+            // Return the new name to the client
+            io.emit('group_edit_name', groups);
+        } catch (err) {
+            console.error(err.message);
+            socket.emit('error', err.message);
+        }
+    });
+
+    socket.on('group_edit_image', async (arg) => {
+        // Get the data from the request body
+        let { userId, groupId, newUrl } = arg;
+
+        try {
+            // check if username already exists
+            let group = await GroupModel.findOne({ _id: groupId });
+
+            if (!group) {
+                socket.emit('error', 'Group does not exist.');
+                return;
+            }
+
+            // check if username already exists
+            let user = await UserModel.findOne({ _id: userId });
+
+            if (!user) {
+                socket.emit('error', 'User account does not exist.');
+                return;
+            }
+
+            group.avatar = newUrl;
+            await group.save();
+
+            console.log(
+                `Group avatar successfully updated --- ${group.avatar}`
+            );
+
+            let groups = await GroupModel.find({});
+
+            if (!groups) {
+                socket.emit('error', 'Could not get groups.');
+                return;
+            }
+
+            // Return the new name to the client
+            io.emit('group_edit_image', groups);
         } catch (err) {
             console.error(err.message);
             socket.emit('error', err.message);
