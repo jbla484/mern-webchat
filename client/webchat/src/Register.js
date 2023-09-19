@@ -2,8 +2,13 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 import socket from './socket/socket';
+import { useEffect } from 'react';
 
-function Register(props) {
+import { useNavigate } from 'react-router-dom';
+
+function Register() {
+    let navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -27,6 +32,24 @@ function Register(props) {
         }
     }
 
+    function onUserRegister(arg) {
+        console.log(`Created user: ${arg.username}, ${arg._id}`);
+        navigate('/login');
+
+        // setUserInfo((userInfo) => ({
+        //     ...userInfo,
+        //     currentPage: 'login',
+        // }));
+    }
+
+    useEffect(() => {
+        socket.on('user_register', onUserRegister);
+
+        return function cleanup() {
+            socket.removeListener('user_register');
+        };
+    }, []);
+
     return (
         <div className='loginContainer'>
             <h1>Sign Up</h1>
@@ -35,14 +58,19 @@ function Register(props) {
                     onSubmit(e);
                 }}
             >
+                <div style={{ textAlign: 'left' }}>
+                    <p
+                        style={{ margin: '0', fontSize: '18px' }}
+                        className='grayColor'
+                    >
+                        Username
+                    </p>
+                </div>
                 <div className='loginUserContainer'>
-                    <div className='loginUserIcon'>
-                        <i className='fa-regular fa-user'></i>
-                    </div>
-
+                    <i className='fa-regular fa-user grayColor'></i>
                     <input
                         type='text'
-                        placeholder='Name'
+                        placeholder='Username'
                         onChange={(e) =>
                             setFormData({ ...formData, name: e.target.value })
                         }
@@ -53,10 +81,16 @@ function Register(props) {
                     ></input>
                 </div>
 
+                <div style={{ textAlign: 'left' }}>
+                    <p
+                        style={{ margin: '0', fontSize: '18px' }}
+                        className='grayColor'
+                    >
+                        Email
+                    </p>
+                </div>
                 <div className='loginUserContainer'>
-                    <div className='loginUserEmail'>
-                        <i className='fa-solid fa-envelope'></i>
-                    </div>
+                    <i className='fa-solid fa-envelope grayColor'></i>
 
                     <input
                         type='email'
@@ -69,11 +103,16 @@ function Register(props) {
                     ></input>
                 </div>
 
+                <div style={{ textAlign: 'left' }}>
+                    <p
+                        style={{ margin: '0', fontSize: '18px' }}
+                        className='grayColor'
+                    >
+                        Password
+                    </p>
+                </div>
                 <div className='loginUserContainer'>
-                    <div className='loginUserEmail'>
-                        <i className='fa-solid fa-key'></i>
-                    </div>
-
+                    <i className='fa-solid fa-key grayColor'></i>
                     <input
                         type='password'
                         placeholder='Password'
@@ -90,11 +129,16 @@ function Register(props) {
                     ></input>
                 </div>
 
+                <div style={{ textAlign: 'left' }}>
+                    <p
+                        style={{ margin: '0', fontSize: '18px' }}
+                        className='grayColor'
+                    >
+                        Confirm Password
+                    </p>
+                </div>
                 <div className='loginUserContainer'>
-                    <div className='loginUserIcon'>
-                        <i className='fa-solid fa-lock'></i>
-                    </div>
-
+                    <i className='fa-solid fa-lock grayColor'></i>
                     <input
                         type='password'
                         placeholder='Confirm Password'
@@ -123,9 +167,9 @@ function Register(props) {
                             Already have an account?
                         </p>
                         <Link
-                            // to='/login'
+                            to='/login'
                             className='registerButton'
-                            onClick={() => props.setter('login')}
+                            // onClick={() => props.setter('login')}
                         >
                             Sign In
                         </Link>

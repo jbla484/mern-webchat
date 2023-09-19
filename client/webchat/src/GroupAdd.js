@@ -3,13 +3,13 @@ import { useState } from 'react';
 
 import socket from './socket/socket';
 
-function GroupAdd(props) {
+function GroupAdd() {
     const [formData, setFormData] = useState({
         name: '',
         avatar: '',
     });
 
-    async function onSubmit(e) {
+    async function eGroupCreate(e) {
         e.preventDefault();
 
         const group = {
@@ -25,13 +25,22 @@ function GroupAdd(props) {
             <h1>Create A Group</h1>
             <form
                 onSubmit={(e) => {
-                    onSubmit(e);
+                    eGroupCreate(e);
                 }}
             >
+                <div style={{ textAlign: 'left' }}>
+                    <p
+                        style={{ margin: '0', fontSize: '18px' }}
+                        className='grayColor'
+                    >
+                        Name
+                    </p>
+                </div>
                 <div className='loginUserContainer'>
-                    <div className='loginUserIcon'>
-                        <i className='fa-solid fa-user-group'></i>
-                    </div>
+                    <i
+                        className='fa-solid fa-user-group grayColor'
+                        style={{ marginRight: '10px' }}
+                    ></i>
 
                     <input
                         type='text'
@@ -45,14 +54,24 @@ function GroupAdd(props) {
                     ></input>
                 </div>
 
+                <div style={{ textAlign: 'left' }}>
+                    <p
+                        style={{ margin: '0', fontSize: '18px' }}
+                        className='grayColor'
+                    >
+                        Gravatar URL
+                    </p>
+                </div>
+
                 <div className='loginUserContainer'>
-                    <div className='loginUserEmail'>
-                        <i className='fa-solid fa-image'></i>
-                    </div>
+                    <i
+                        className='fa-solid fa-image grayColor'
+                        style={{ marginRight: '10px' }}
+                    ></i>
 
                     <input
                         type='text'
-                        placeholder='Avatar URL'
+                        placeholder='Url'
                         onChange={(e) =>
                             setFormData({ ...formData, avatar: e.target.value })
                         }
@@ -62,10 +81,7 @@ function GroupAdd(props) {
                 </div>
 
                 <div className='loginLinkContainer'>
-                    <button
-                        to='/'
-                        className='loginPostLink'
-                    >
+                    <button to='/' className='loginPostLink'>
                         Submit
                     </button>
                 </div>

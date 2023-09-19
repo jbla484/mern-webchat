@@ -1,17 +1,16 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import socket from './socket/socket';
 
-function Login(props) {
+function Login({ setUser }) {
+    let navigate = useNavigate();
+
     const [formData, setFormData] = useState({
-        name: '',
         email: '',
         password: '',
-        password2: '',
     });
 
-    async function onSubmit(e) {
+    async function loginSubmit(e) {
         e.preventDefault();
 
         const user = {
@@ -19,22 +18,48 @@ function Login(props) {
             password: formData.password,
         };
 
+        console.log('user submit login');
         socket.emit('client_user_login', user);
     }
+
+    function onUserLogin(arg) {
+        console.log('onUserLogin');
+        console.log(arg);
+
+        setUser(arg);
+        navigate('/dashboard');
+    }
+
+    useEffect(() => {
+        socket.on('server_user_login', onUserLogin);
+
+        return function cleanup() {
+            socket.removeListener('server_user_login');
+        };
+    }, []);
 
     return (
         <div className='loginContainer'>
             <h1>Log In</h1>
             <form
                 onSubmit={(e) => {
-                    onSubmit(e);
+                    loginSubmit(e);
                 }}
             >
-                <div className='loginUserContainer'>
-                    <div className='loginUserEmail'>
-                        <i className='fa-solid fa-envelope'></i>
-                    </div>
+                <div style={{ textAlign: 'left' }}>
+                    <p
+                        style={{ margin: '0', fontSize: '18px' }}
+                        className='grayColor'
+                    >
+                        Email
+                    </p>
+                </div>
 
+                <div className='loginUserContainer'>
+                    <i
+                        className='fa-solid fa-envelope grayColor'
+                        style={{ marginRight: '10px' }}
+                    ></i>
                     <input
                         type='email'
                         placeholder='Email Address'
@@ -47,11 +72,20 @@ function Login(props) {
                         autoFocus
                     ></input>
                 </div>
-                <div className='loginUserContainer'>
-                    <div className='loginPasswordIcon'>
-                        <i className='fa-solid fa-key'></i>
-                    </div>
 
+                <div style={{ textAlign: 'left' }}>
+                    <p
+                        style={{ margin: '0', fontSize: '18px' }}
+                        className='grayColor'
+                    >
+                        Password
+                    </p>
+                </div>
+                <div className='loginUserContainer'>
+                    <i
+                        className='fa-solid fa-key grayColor'
+                        style={{ marginRight: '10px' }}
+                    ></i>
                     <input
                         type='password'
                         placeholder='Password'
@@ -80,7 +114,11 @@ function Login(props) {
                         <p style={{ margin: '0', paddingBottom: '5px' }}>
                             Don't have an account?
                         </p>
-                        <Link className='registerLink' onClick={() => {}}>
+                        <Link
+                            to='/register'
+                            className='registerLink'
+                            onClick={() => {}}
+                        >
                             Sign Up
                         </Link>
                     </div>

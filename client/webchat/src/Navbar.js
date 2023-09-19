@@ -14,7 +14,7 @@ function Navbar() {
                 ></i>{' '}
                 WebChat
             </Link>
-            <p>
+            {/* <p>
                 <Link
                     to='/users'
                     style={{ fontSize: '20px' }}
@@ -37,7 +37,13 @@ function Navbar() {
                     ></i>{' '}
                     Login
                 </Link>
-            </p>
+            </p> */}
+            <label for='check'>
+                <input type='checkbox' id='check' />
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
         </nav>
     );
 }
