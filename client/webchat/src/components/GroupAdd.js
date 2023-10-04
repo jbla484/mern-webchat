@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-import socket from './socket/socket';
+import socket from '../socket/socket';
 
 function GroupAdd() {
     const [formData, setFormData] = useState({

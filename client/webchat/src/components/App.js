@@ -1,4 +1,4 @@
-import './App.css';
+import '../styles/App.css';
 import Landing from './Landing';
 import Login from './Login';
 import Register from './Register';
@@ -10,7 +10,7 @@ import GroupChat from './GroupChat';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import socket from './socket/socket';
+import socket from '../socket/socket';
 
 function App() {
     const [user, setUser] = useState({});

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-import socket from './socket/socket';
+import socket from '../socket/socket';
 
 function GroupChat({ user, group }) {
     function dateReadable(date) {
@@ -182,78 +182,84 @@ function GroupChat({ user, group }) {
                     transform: 'translateZ(0)',
                 }}
             >
-                {group.messages.map((message) => {
-                    return (
-                        <div
-                            className={
-                                message.userId === userInfo.userId
-                                    ? 'textRight'
-                                    : ''
-                            }
-                        >
+                {group.messages ? (
+                    group.messages.map((message) => {
+                        return (
                             <div
-                                className={
-                                    message.userId === userInfo.userId
-                                        ? 'incomingMessageUser'
-                                        : 'incomingMessageOther'
-                                }
-                                key={message._id}
+                            // className={
+                            //     message.userId === userInfo.userId
+                            //         ? 'textRight'
+                            //         : ''
+                            // }
                             >
                                 <div
-                                    style={{
-                                        display: 'inline-block',
-                                    }}
+                                    // className={
+                                    //     message.userId === userInfo.userId
+                                    //         ? 'incomingMessageUser'
+                                    //         : 'incomingMessageOther'
+                                    // }
+                                    key={message._id}
                                 >
-                                    <img
-                                        src={message.avatar}
-                                        height={'40px'}
-                                        width={'40px'}
-                                        alt='profile'
+                                    <div
                                         style={{
-                                            borderRadius: '20px',
-                                            marginRight: '10px',
+                                            display: 'inline-block',
                                         }}
-                                    ></img>
+                                    >
+                                        <img
+                                            src={message.avatar}
+                                            height={'40px'}
+                                            width={'40px'}
+                                            alt='profile'
+                                            style={{
+                                                borderRadius: '20px',
+                                                marginRight: '10px',
+                                            }}
+                                        ></img>
+                                    </div>
+                                    <div
+                                        style={{
+                                            display: 'inline-block',
+                                        }}
+                                    >
+                                        <h3
+                                            style={{
+                                                padding: '0px',
+                                                margin: '0',
+                                            }}
+                                        >
+                                            {message.username}
+                                        </h3>
+                                        <p
+                                            style={{
+                                                padding: '0px',
+                                                margin: '0',
+                                            }}
+                                        >
+                                            {message.message}
+                                        </p>
+                                    </div>
                                 </div>
                                 <div
-                                    style={{
-                                        display: 'inline-block',
-                                    }}
+                                // className={
+                                //     message.userId === userInfo.userId
+                                //         ? 'incomingMessageTimeUser'
+                                //         : 'incomingMessageTimeOther'
+                                // }
                                 >
-                                    <h3
-                                        style={{
-                                            padding: '0px',
-                                            margin: '0',
-                                        }}
-                                    >
-                                        {message.username}
-                                    </h3>
-                                    <p
-                                        style={{
-                                            padding: '0px',
-                                            margin: '0',
-                                        }}
-                                    >
-                                        {message.message}
-                                    </p>
+                                    <div>
+                                        {tConvert(
+                                            dateReadable(
+                                                new Date(message.created)
+                                            )
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                            <div
-                                className={
-                                    message.userId === userInfo.userId
-                                        ? 'incomingMessageTimeUser'
-                                        : 'incomingMessageTimeOther'
-                                }
-                            >
-                                <div>
-                                    {tConvert(
-                                        dateReadable(new Date(message.created))
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })
+                ) : (
+                    <div>Couldn't get messages...</div>
+                )}
                 {/* <div className='scroll' ref={messagesEndRef} /> */}
             </div>
 

@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 
-import socket from './socket/socket';
+import socket from '../socket/socket';
 
 function HomeTemp() {
     function onConnect() {
