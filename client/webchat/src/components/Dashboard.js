@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 function Dashboard() {
     return (
-        <>
+        <header id='App-header'>
             <div style={{ marginTop: '20px', padding: '20px' }}>
                 {/* <Link to='/messages' className='landingRegisterLink'>
                     Messages
@@ -14,7 +14,7 @@ function Dashboard() {
                     Logout
                 </Link>
             </div>
-        </>
+        </header>
     );
 }
 

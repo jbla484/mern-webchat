@@ -12,7 +12,7 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server, {
     cors: {
-        origin: 'http://localhost:3000',
+        origin: 'http://10.0.0.173:3000',
         methods: ['GET', 'POST'],
     },
 });
@@ -89,6 +89,20 @@ io.on('connection', (socket) => {
             console.error(err.message);
             socket.emit('error', err.message);
         }
+    });
+
+    socket.on('group_get', async (info) => {
+        const groupId = info;
+        // Retrieve all users
+        let group = await GroupModel.findOne({ _id: groupId });
+
+        if (!group) {
+            console.log(`No group found with id: ${groupId}`);
+            socket.emit('error', 'No group found with that id.');
+            return;
+        }
+
+        socket.emit('group_get', group);
     });
 
     // Joins a specific group

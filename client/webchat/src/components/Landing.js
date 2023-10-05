@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 function Landing() {
     return (
-        <>
+        <header id='App-header'>
             <div
                 style={{
                     fontFamily: "'Oswald', sans-serif",
@@ -48,7 +48,7 @@ function Landing() {
                     Login
                 </Link>
             </div>
-        </>
+        </header>
     );
 }
 

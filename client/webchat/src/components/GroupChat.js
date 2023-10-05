@@ -1,9 +1,18 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import socket from '../socket/socket';
 
-function GroupChat({ user, group }) {
+function GroupChat({ user }) {
+    const { id } = useParams();
+    const [formData, setFormData] = useState({
+        name: '',
+        avatar: '',
+    });
+
+    const [group, setGroup] = useState({});
+
     function dateReadable(date) {
         return (
             ('00' + date.getHours()).slice(-2) +
@@ -38,15 +47,21 @@ function GroupChat({ user, group }) {
     useEffect(() => {
         socket.on('group_message_add', onGroupMessage);
 
+        // pull group id from url,
+        console.log(id);
+        // async call to get group info, save it in state?
+        const group = {
+            name: formData.name,
+            avatar: formData.avatar,
+        };
+
+        socket.emit('group_create', group);
+        setGroup({});
+
         return function cleanup() {
             socket.removeListener('group_message_add');
         };
     }, []);
-
-    const [formData, setFormData] = useState({
-        name: '',
-        avatar: '',
-    });
 
     async function eGroupCreate(e) {
         e.preventDefault();
@@ -60,7 +75,7 @@ function GroupChat({ user, group }) {
     }
 
     return (
-        <>
+        <header id='App-header2'>
             <div className='messageGroup'>
                 <div className='userImage column3image'>
                     <img
@@ -291,7 +306,7 @@ function GroupChat({ user, group }) {
                     </div>
                 </div>
             </form>
-        </>
+        </header>
     );
 }
 

@@ -7,6 +7,7 @@ import Dashboard from './Dashboard';
 import Groups from './Groups';
 import GroupAdd from './GroupAdd';
 import GroupChat from './GroupChat';
+import GroupJoin from './GroupJoin';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -37,29 +38,32 @@ function App() {
     return (
         <BrowserRouter>
             <Navbar />
-            <header className='App-header'>
-                <Routes>
-                    <Route index element={<Landing />} />
-                    <Route
-                        exact
-                        path='/login'
-                        element={<Login setUser={setUser} />}
-                    />
-                    <Route exact path='/register' element={<Register />} />
-                    <Route exact path='/dashboard' element={<Dashboard />} />
-                    <Route
-                        exact
-                        path='/groups'
-                        element={<Groups setGroup={setGroup} />}
-                    />
-                    <Route exact path='/groups/add' element={<GroupAdd />} />
-                    <Route
-                        exact
-                        path='/groups/chat'
-                        element={<GroupChat user={user} group={group} />}
-                    />
-                </Routes>
-            </header>
+            <Routes>
+                <Route index element={<Landing />} />
+                <Route
+                    exact
+                    path='/login'
+                    element={<Login setUser={setUser} />}
+                />
+                <Route exact path='/register' element={<Register />} />
+                <Route exact path='/dashboard' element={<Dashboard />} />
+                <Route
+                    exact
+                    path='/groups'
+                    element={<Groups setGroup={setGroup} />}
+                />
+                <Route exact path='/groups/add' element={<GroupAdd />} />
+                <Route
+                    exact
+                    path='/groups/:id/chat'
+                    element={<GroupChat user={user} />}
+                />
+                <Route
+                    exact
+                    path='/groups/:id/join'
+                    element={<GroupJoin user={user} />}
+                />
+            </Routes>
         </BrowserRouter>
     );
 }

@@ -1,11 +1,7 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 import socket from '../socket/socket';
-
-import { useEffect } from 'react';
-
-import { useNavigate } from 'react-router-dom';
 
 function Register() {
     let navigate = useNavigate();
@@ -52,132 +48,140 @@ function Register() {
     }, []);
 
     return (
-        <div className='loginContainer'>
-            <h1>Sign Up</h1>
-            <form
-                onSubmit={(e) => {
-                    onSubmit(e);
-                }}
-            >
-                <div style={{ textAlign: 'left' }}>
-                    <p
-                        style={{ margin: '0', fontSize: '18px' }}
-                        className='grayColor'
-                    >
-                        Username
-                    </p>
-                </div>
-                <div className='loginUserContainer'>
-                    <i className='fa-regular fa-user grayColor'></i>
-                    <input
-                        type='text'
-                        placeholder='Username'
-                        onChange={(e) =>
-                            setFormData({ ...formData, name: e.target.value })
-                        }
-                        value={formData.name}
-                        required
-                        className='loginInput'
-                        autoFocus
-                    ></input>
-                </div>
-
-                <div style={{ textAlign: 'left' }}>
-                    <p
-                        style={{ margin: '0', fontSize: '18px' }}
-                        className='grayColor'
-                    >
-                        Email
-                    </p>
-                </div>
-                <div className='loginUserContainer'>
-                    <i className='fa-solid fa-envelope grayColor'></i>
-
-                    <input
-                        type='email'
-                        placeholder='Email Address'
-                        onChange={(e) =>
-                            setFormData({ ...formData, email: e.target.value })
-                        }
-                        value={formData.email}
-                        className='loginInput'
-                    ></input>
-                </div>
-
-                <div style={{ textAlign: 'left' }}>
-                    <p
-                        style={{ margin: '0', fontSize: '18px' }}
-                        className='grayColor'
-                    >
-                        Password
-                    </p>
-                </div>
-                <div className='loginUserContainer'>
-                    <i className='fa-solid fa-key grayColor'></i>
-                    <input
-                        type='password'
-                        placeholder='Password'
-                        minLength='6'
-                        required
-                        onChange={(e) =>
-                            setFormData({
-                                ...formData,
-                                password: e.target.value,
-                            })
-                        }
-                        value={formData.password}
-                        className='loginInput'
-                    ></input>
-                </div>
-
-                <div style={{ textAlign: 'left' }}>
-                    <p
-                        style={{ margin: '0', fontSize: '18px' }}
-                        className='grayColor'
-                    >
-                        Confirm Password
-                    </p>
-                </div>
-                <div className='loginUserContainer'>
-                    <i className='fa-solid fa-lock grayColor'></i>
-                    <input
-                        type='password'
-                        placeholder='Confirm Password'
-                        minLength='6'
-                        required
-                        onChange={(e) =>
-                            setFormData({
-                                ...formData,
-                                password2: e.target.value,
-                            })
-                        }
-                        value={formData.password2}
-                        className='loginInput'
-                    ></input>
-                </div>
-
-                <div className='loginLinkContainer'>
-                    <button to='/' className='loginPostLink'>
-                        Submit
-                    </button>
-                </div>
-
-                <div className='loginRegisterContainer'>
-                    <div style={{ margin: '0', paddingBottom: '40px' }}>
-                        <p style={{ margin: '0', paddingBottom: '5px' }}>
-                            Already have an account?
-                        </p>
-                        <Link
-                            to='/login'
-                            className='registerButton'
-                            // onClick={() => props.setter('login')}
+        <header id='App-header'>
+            <div className='loginContainer'>
+                <h1>Sign Up</h1>
+                <form
+                    onSubmit={(e) => {
+                        onSubmit(e);
+                    }}
+                >
+                    <div style={{ textAlign: 'left' }}>
+                        <p
+                            style={{ margin: '0', fontSize: '18px' }}
+                            className='grayColor'
                         >
-                            Sign In
-                        </Link>
+                            Username
+                        </p>
                     </div>
-                </div>
-            </form>
-        </div>
+                    <div className='loginUserContainer'>
+                        <i className='fa-regular fa-user grayColor'></i>
+                        <input
+                            type='text'
+                            placeholder='Username'
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    name: e.target.value,
+                                })
+                            }
+                            value={formData.name}
+                            required
+                            className='loginInput'
+                            autoFocus
+                        ></input>
+                    </div>
+
+                    <div style={{ textAlign: 'left' }}>
+                        <p
+                            style={{ margin: '0', fontSize: '18px' }}
+                            className='grayColor'
+                        >
+                            Email
+                        </p>
+                    </div>
+                    <div className='loginUserContainer'>
+                        <i className='fa-solid fa-envelope grayColor'></i>
+
+                        <input
+                            type='email'
+                            placeholder='Email Address'
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    email: e.target.value,
+                                })
+                            }
+                            value={formData.email}
+                            className='loginInput'
+                        ></input>
+                    </div>
+
+                    <div style={{ textAlign: 'left' }}>
+                        <p
+                            style={{ margin: '0', fontSize: '18px' }}
+                            className='grayColor'
+                        >
+                            Password
+                        </p>
+                    </div>
+                    <div className='loginUserContainer'>
+                        <i className='fa-solid fa-key grayColor'></i>
+                        <input
+                            type='password'
+                            placeholder='Password'
+                            minLength='6'
+                            required
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    password: e.target.value,
+                                })
+                            }
+                            value={formData.password}
+                            className='loginInput'
+                        ></input>
+                    </div>
+
+                    <div style={{ textAlign: 'left' }}>
+                        <p
+                            style={{ margin: '0', fontSize: '18px' }}
+                            className='grayColor'
+                        >
+                            Confirm Password
+                        </p>
+                    </div>
+                    <div className='loginUserContainer'>
+                        <i className='fa-solid fa-lock grayColor'></i>
+                        <input
+                            type='password'
+                            placeholder='Confirm Password'
+                            minLength='6'
+                            required
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    password2: e.target.value,
+                                })
+                            }
+                            value={formData.password2}
+                            className='loginInput'
+                        ></input>
+                    </div>
+
+                    <div className='loginLinkContainer'>
+                        <button to='/' className='loginPostLink'>
+                            Submit
+                        </button>
+                    </div>
+
+                    <div className='loginRegisterContainer'>
+                        <div style={{ margin: '0', paddingBottom: '40px' }}>
+                            <p style={{ margin: '0', paddingBottom: '5px' }}>
+                                Already have an account?
+                            </p>
+                            <Link
+                                to='/login'
+                                className='registerButton'
+                                // onClick={() => props.setter('login')}
+                            >
+                                Sign In
+                            </Link>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </header>
     );
 }
 

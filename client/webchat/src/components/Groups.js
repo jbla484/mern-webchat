@@ -7,6 +7,10 @@ import { useNavigate } from 'react-router-dom';
 function Groups({ setGroup }) {
     let navigate = useNavigate();
 
+    const [formData, setFormData] = useState({
+        search: '',
+    });
+
     const [groupInfo, setGroupInfo] = useState({
         listOfJoinedGroups: [],
         listOfOpenGroups: [],
@@ -52,10 +56,10 @@ function Groups({ setGroup }) {
     }
 
     return (
-        <>
+        <header id='App-header2'>
             <h1
                 style={{
-                    margin: '0px',
+                    margin: '20px 0 0 0',
                 }}
             >
                 Groups
@@ -64,12 +68,12 @@ function Groups({ setGroup }) {
                 type='search'
                 placeholder='Search groups'
                 className='sendInput2'
-                // onChange={(e) =>
-                //     setFormData({
-                //         ...formData,
-                //         message: e.target.value,
-                //     })
-                // }
+                onChange={(e) => {
+                    setFormData({
+                        ...formData,
+                        search: e.target.value,
+                    });
+                }}
             ></input>
             {groupInfo.listOfJoinedGroups.length > 0 && (
                 <div
@@ -180,52 +184,107 @@ function Groups({ setGroup }) {
                 </div>
             </>
             {groupInfo.listOfOpenGroups.map((group) => {
-                return (
-                    <div
-                        className='groupContainer hover2'
-                        onClick={(e) => {
-                            console.log('open group clicked');
-
-                            // TODO: need to grab group info
-                            setGroup({});
-                            navigate('/groups/chat');
-                        }}
-                        key={group._id}
-                    >
-                        <div className='messageUser2'>
+                if (formData.search) {
+                    if (group.name.includes(formData.search)) {
+                        return (
                             <div
-                                className='userImage column3image'
-                                style={{ padding: '10px 0' }}
+                                className='groupContainer hover2'
+                                onClick={(e) => {
+                                    console.log('open group clicked');
+
+                                    // TODO: need to grab group info
+                                    setGroup({});
+                                    navigate(`/groups/${group._id}/chat`);
+                                }}
+                                key={group._id}
                             >
-                                <img
-                                    src={group.avatar}
-                                    height={'40px'}
-                                    width={'40px'}
-                                    alt='group'
-                                    style={{ borderRadius: '20px' }}
-                                ></img>
+                                <div className='messageUser2'>
+                                    <div
+                                        className='userImage column3image'
+                                        style={{ padding: '10px 0' }}
+                                    >
+                                        <img
+                                            src={group.avatar}
+                                            height={'40px'}
+                                            width={'40px'}
+                                            alt='group'
+                                            style={{ borderRadius: '20px' }}
+                                        ></img>
+                                    </div>
+                                    <div className='messageUser2name'>
+                                        <div
+                                            style={{
+                                                textAlign: 'left',
+                                                marginLeft: '10px',
+                                            }}
+                                        >
+                                            <b>{group.name}</b>
+                                        </div>
+                                        <div className='groupLastMessage'>
+                                            {group.lastMessage}
+                                        </div>
+                                    </div>
+                                    <div className='messageUser2messageTime'>
+                                        {tConvert(
+                                            dateReadable(
+                                                new Date(group.lastUpdated)
+                                            )
+                                        )}
+                                    </div>
+                                </div>
                             </div>
-                            <div className='messageUser2name'>
+                        );
+                    }
+                } else {
+                    return (
+                        <div
+                            className='groupContainer hover2'
+                            onClick={(e) => {
+                                console.log('open group clicked');
+
+                                // TODO: need to grab group info
+                                setGroup({});
+                                navigate(`/groups/${group._id}/chat`);
+                            }}
+                            key={group._id}
+                        >
+                            <div className='messageUser2'>
                                 <div
-                                    style={{
-                                        textAlign: 'left',
-                                        marginLeft: '10px',
-                                    }}
+                                    className='userImage column3image'
+                                    style={{ padding: '10px 0' }}
                                 >
-                                    <b>{group.name}</b>
+                                    <img
+                                        src={group.avatar}
+                                        height={'40px'}
+                                        width={'40px'}
+                                        alt='group'
+                                        style={{ borderRadius: '20px' }}
+                                    ></img>
                                 </div>
-                                <div className='groupLastMessage'>
-                                    {group.lastMessage}
+                                <div className='messageUser2name'>
+                                    <div
+                                        style={{
+                                            textAlign: 'left',
+                                            marginLeft: '10px',
+                                        }}
+                                    >
+                                        <b>{group.name}</b>
+                                    </div>
+                                    <div className='groupLastMessage'>
+                                        {group.lastMessage}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='messageUser2messageTime'>
-                                {tConvert(
-                                    dateReadable(new Date(group.lastUpdated))
-                                )}
+                                <div className='messageUser2messageTime'>
+                                    {tConvert(
+                                        dateReadable(
+                                            new Date(group.lastUpdated)
+                                        )
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                );
+                    );
+                }
             })}{' '}
             <i
                 className='fa-solid fa-square-plus item2 hover'
@@ -238,7 +297,7 @@ function Groups({ setGroup }) {
                     // }));
                 }}
             ></i>
-        </>
+        </header>
     );
 }
 

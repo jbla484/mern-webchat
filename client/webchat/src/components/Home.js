@@ -55,6 +55,7 @@ function Home() {
             ...serverInfo,
             listOfOpenGroups: groups,
         }));
+        console.log('onGroupCreate');
     }
 
     function onError(arg) {
@@ -778,541 +779,541 @@ function Home() {
         //                         }}
         //                         key={group._id}
         //                     >
-                            //     <div className='messageGroup'>
-                            //         <div className='userImage column3image'>
-                            //             <img
-                            //                 src={group.avatar}
-                            //                 height={'40px'}
-                            //                 width={'40px'}
-                            //                 alt='group'
-                            //                 style={{ borderRadius: '20px' }}
-                            //             ></img>
-                            //         </div>
-                            //         <div className='userName'>
-                            //             <b>{group.name}</b>
-                            //         </div>
-                            //         <div
-                            //             className='chatExpandButton'
-                            //             onClick={(e) => switchToFullScreen(e)}
-                            //         >
-                            //             <i className='fa-solid fa-expand hover'></i>
-                            //         </div>
-                            //         <div
-                            //             className='chatSettingsButton'
-                            //             onClick={(e) => setGroupSettings(e)}
-                            //         >
-                            //             <i className='fa-solid fa-gear hover'></i>
-                            //         </div>
+        //     <div className='messageGroup'>
+        //         <div className='userImage column3image'>
+        //             <img
+        //                 src={group.avatar}
+        //                 height={'40px'}
+        //                 width={'40px'}
+        //                 alt='group'
+        //                 style={{ borderRadius: '20px' }}
+        //             ></img>
+        //         </div>
+        //         <div className='userName'>
+        //             <b>{group.name}</b>
+        //         </div>
+        //         <div
+        //             className='chatExpandButton'
+        //             onClick={(e) => switchToFullScreen(e)}
+        //         >
+        //             <i className='fa-solid fa-expand hover'></i>
+        //         </div>
+        //         <div
+        //             className='chatSettingsButton'
+        //             onClick={(e) => setGroupSettings(e)}
+        //         >
+        //             <i className='fa-solid fa-gear hover'></i>
+        //         </div>
 
-                            //         {userInfo.groupSettingsVisible && (
-                            //             <div className='dialogWindow'>
-                            //                 <div
-                            //                     className='hover'
-                            //                     style={{ padding: '20px' }}
-                            //                     onClick={(e) => {
-                            //                         if (
-                            //                             userInfo.groupSubPage ===
-                            //                             'edit_name'
-                            //                         ) {
-                            //                             setUserInfo(
-                            //                                 (userInfo) => ({
-                            //                                     ...userInfo,
-                            //                                     groupSubPage:
-                            //                                         '',
-                            //                                 })
-                            //                             );
-                            //                         } else {
-                            //                             setUserInfo(
-                            //                                 (userInfo) => ({
-                            //                                     ...userInfo,
-                            //                                     groupSubPage:
-                            //                                         'edit_name',
-                            //                                 })
-                            //                             );
-                            //                         }
+        //         {userInfo.groupSettingsVisible && (
+        //             <div className='dialogWindow'>
+        //                 <div
+        //                     className='hover'
+        //                     style={{ padding: '20px' }}
+        //                     onClick={(e) => {
+        //                         if (
+        //                             userInfo.groupSubPage ===
+        //                             'edit_name'
+        //                         ) {
+        //                             setUserInfo(
+        //                                 (userInfo) => ({
+        //                                     ...userInfo,
+        //                                     groupSubPage:
+        //                                         '',
+        //                                 })
+        //                             );
+        //                         } else {
+        //                             setUserInfo(
+        //                                 (userInfo) => ({
+        //                                     ...userInfo,
+        //                                     groupSubPage:
+        //                                         'edit_name',
+        //                                 })
+        //                             );
+        //                         }
 
-                            //                         // editGroupName();
-                            //                     }}
-                            //                 >
-                            //                     <i
-                            //                         className='fa-solid fa-signature'
-                            //                         style={{
-                            //                             paddingRight: '10px',
-                            //                         }}
-                            //                     ></i>
-                            //                     Edit group Name
-                            //                 </div>
+        //                         // editGroupName();
+        //                     }}
+        //                 >
+        //                     <i
+        //                         className='fa-solid fa-signature'
+        //                         style={{
+        //                             paddingRight: '10px',
+        //                         }}
+        //                     ></i>
+        //                     Edit group Name
+        //                 </div>
 
-                            //                 <div
-                            //                     className='hover'
-                            //                     style={{ padding: '20px' }}
-                            //                     onClick={(e) => {
-                            //                         if (
-                            //                             userInfo.groupSubPage ===
-                            //                             'edit_image'
-                            //                         ) {
-                            //                             setUserInfo(
-                            //                                 (userInfo) => ({
-                            //                                     ...userInfo,
-                            //                                     groupSubPage:
-                            //                                         '',
-                            //                                 })
-                            //                             );
-                            //                         } else {
-                            //                             setUserInfo(
-                            //                                 (userInfo) => ({
-                            //                                     ...userInfo,
-                            //                                     groupSubPage:
-                            //                                         'edit_image',
-                            //                                 })
-                            //                             );
-                            //                         }
-                            //                     }}
-                            //                 >
-                            //                     <i
-                            //                         className='fa-solid fa-image'
-                            //                         style={{
-                            //                             paddingRight: '10px',
-                            //                         }}
-                            //                     ></i>
-                            //                     Edit group image
-                            //                 </div>
+        //                 <div
+        //                     className='hover'
+        //                     style={{ padding: '20px' }}
+        //                     onClick={(e) => {
+        //                         if (
+        //                             userInfo.groupSubPage ===
+        //                             'edit_image'
+        //                         ) {
+        //                             setUserInfo(
+        //                                 (userInfo) => ({
+        //                                     ...userInfo,
+        //                                     groupSubPage:
+        //                                         '',
+        //                                 })
+        //                             );
+        //                         } else {
+        //                             setUserInfo(
+        //                                 (userInfo) => ({
+        //                                     ...userInfo,
+        //                                     groupSubPage:
+        //                                         'edit_image',
+        //                                 })
+        //                             );
+        //                         }
+        //                     }}
+        //                 >
+        //                     <i
+        //                         className='fa-solid fa-image'
+        //                         style={{
+        //                             paddingRight: '10px',
+        //                         }}
+        //                     ></i>
+        //                     Edit group image
+        //                 </div>
 
-                            //                 <div
-                            //                     className='hover'
-                            //                     style={{ padding: '20px' }}
-                            //                     onClick={(e) => onLeaveGroup(e)}
-                            //                 >
-                            //                     <i
-                            //                         className='fa-solid fa-door-open'
-                            //                         style={{
-                            //                             paddingRight: '10px',
-                            //                         }}
-                            //                     ></i>
-                            //                     Leave Group
-                            //                 </div>
+        //                 <div
+        //                     className='hover'
+        //                     style={{ padding: '20px' }}
+        //                     onClick={(e) => onLeaveGroup(e)}
+        //                 >
+        //                     <i
+        //                         className='fa-solid fa-door-open'
+        //                         style={{
+        //                             paddingRight: '10px',
+        //                         }}
+        //                     ></i>
+        //                     Leave Group
+        //                 </div>
 
-                            //                 <div
-                            //                     className='hover'
-                            //                     style={{ padding: '20px' }}
-                            //                     onClick={(e) =>
-                            //                         console.log(
-                            //                             'TODO: Delete group clicked'
-                            //                         )
-                            //                     }
-                            //                 >
-                            //                     <i
-                            //                         className='fa-solid fa-trash'
-                            //                         style={{
-                            //                             paddingRight: '10px',
-                            //                         }}
-                            //                     ></i>
-                            //                     Delete group
-                            //                 </div>
-                            //             </div>
-                            //         )}
-                            //         {userInfo.groupSubPage === 'edit_name' &&
-                            //             [1].map((throwaway) => {
-                            //                 console.log('show edit group name');
-                            //                 return (
-                            //                     <div
-                            //                         className='loginContainer'
-                            //                         style={{
-                            //                             position: 'fixed',
-                            //                             top: '30%',
-                            //                             zIndex: '22',
-                            //                             backgroundColor:
-                            //                                 'white',
-                            //                         }}
-                            //                     >
-                            //                         <h1>
-                            //                             Edit your group name
-                            //                         </h1>
-                            //                         <form
-                            //                             onSubmit={(e) => {
-                            //                                 e.preventDefault();
-                            //                                 editGroupName();
-                            //                             }}
-                            //                         >
-                            //                             <div className='loginUserContainer'>
-                            //                                 <div className='loginUserIcon'>
-                            //                                     <i className='fa-solid fa-user-group'></i>
-                            //                                 </div>
+        //                 <div
+        //                     className='hover'
+        //                     style={{ padding: '20px' }}
+        //                     onClick={(e) =>
+        //                         console.log(
+        //                             'TODO: Delete group clicked'
+        //                         )
+        //                     }
+        //                 >
+        //                     <i
+        //                         className='fa-solid fa-trash'
+        //                         style={{
+        //                             paddingRight: '10px',
+        //                         }}
+        //                     ></i>
+        //                     Delete group
+        //                 </div>
+        //             </div>
+        //         )}
+        //         {userInfo.groupSubPage === 'edit_name' &&
+        //             [1].map((throwaway) => {
+        //                 console.log('show edit group name');
+        //                 return (
+        //                     <div
+        //                         className='loginContainer'
+        //                         style={{
+        //                             position: 'fixed',
+        //                             top: '30%',
+        //                             zIndex: '22',
+        //                             backgroundColor:
+        //                                 'white',
+        //                         }}
+        //                     >
+        //                         <h1>
+        //                             Edit your group name
+        //                         </h1>
+        //                         <form
+        //                             onSubmit={(e) => {
+        //                                 e.preventDefault();
+        //                                 editGroupName();
+        //                             }}
+        //                         >
+        //                             <div className='loginUserContainer'>
+        //                                 <div className='loginUserIcon'>
+        //                                     <i className='fa-solid fa-user-group'></i>
+        //                                 </div>
 
-                            //                                 <input
-                            //                                     type='text'
-                            //                                     placeholder='Name'
-                            //                                     onChange={(e) =>
-                            //                                         setFormData(
-                            //                                             {
-                            //                                                 ...formData,
-                            //                                                 name: e
-                            //                                                     .target
-                            //                                                     .value,
-                            //                                             }
-                            //                                         )
-                            //                                     }
-                            //                                     value={
-                            //                                         formData.name
-                            //                                     }
-                            //                                     required
-                            //                                     className='loginInput'
-                            //                                 ></input>
-                            //                             </div>
+        //                                 <input
+        //                                     type='text'
+        //                                     placeholder='Name'
+        //                                     onChange={(e) =>
+        //                                         setFormData(
+        //                                             {
+        //                                                 ...formData,
+        //                                                 name: e
+        //                                                     .target
+        //                                                     .value,
+        //                                             }
+        //                                         )
+        //                                     }
+        //                                     value={
+        //                                         formData.name
+        //                                     }
+        //                                     required
+        //                                     className='loginInput'
+        //                                 ></input>
+        //                             </div>
 
-                            //                             <div className='loginLinkContainer'>
-                            //                                 <button
-                            //                                     to='/'
-                            //                                     className='loginPostLink'
-                            //                                 >
-                            //                                     Submit
-                            //                                 </button>
-                            //                             </div>
+        //                             <div className='loginLinkContainer'>
+        //                                 <button
+        //                                     to='/'
+        //                                     className='loginPostLink'
+        //                                 >
+        //                                     Submit
+        //                                 </button>
+        //                             </div>
 
-                            //                             <div className='loginRegisterContainer'>
-                            //                                 <p
-                            //                                     style={{
-                            //                                         margin: '0 auto',
-                            //                                         paddingBottom:
-                            //                                             '5px',
-                            //                                         width: '60%',
-                            //                                     }}
-                            //                                 >
-                            //                                     Want to join a
-                            //                                     group instead?
-                            //                                     Look in the
-                            //                                     group tab to the
-                            //                                     left to find
-                            //                                     open groups.
-                            //                                 </p>
-                            //                             </div>
-                            //                         </form>
-                            //                     </div>
-                            //                 );
-                            //             })}
+        //                             <div className='loginRegisterContainer'>
+        //                                 <p
+        //                                     style={{
+        //                                         margin: '0 auto',
+        //                                         paddingBottom:
+        //                                             '5px',
+        //                                         width: '60%',
+        //                                     }}
+        //                                 >
+        //                                     Want to join a
+        //                                     group instead?
+        //                                     Look in the
+        //                                     group tab to the
+        //                                     left to find
+        //                                     open groups.
+        //                                 </p>
+        //                             </div>
+        //                         </form>
+        //                     </div>
+        //                 );
+        //             })}
 
-                            //         {userInfo.groupSubPage === 'edit_image' &&
-                            //             [1].map((throwaway) => {
-                            //                 return (
-                            //                     <div
-                            //                         className='loginContainer'
-                            //                         style={{
-                            //                             position: 'fixed',
-                            //                             top: '30%',
-                            //                             zIndex: '22',
-                            //                             backgroundColor:
-                            //                                 'white',
-                            //                         }}
-                            //                     >
-                            //                         <h1>
-                            //                             Edit your group image
-                            //                         </h1>
-                            //                         <form
-                            //                             onSubmit={(e) => {
-                            //                                 e.preventDefault();
-                            //                                 editGroupImage();
-                            //                             }}
-                            //                         >
-                            //                             <div className='loginUserContainer'>
-                            //                                 <div className='loginUserIcon'>
-                            //                                     <i className='fa-solid fa-user-group'></i>
-                            //                                 </div>
+        //         {userInfo.groupSubPage === 'edit_image' &&
+        //             [1].map((throwaway) => {
+        //                 return (
+        //                     <div
+        //                         className='loginContainer'
+        //                         style={{
+        //                             position: 'fixed',
+        //                             top: '30%',
+        //                             zIndex: '22',
+        //                             backgroundColor:
+        //                                 'white',
+        //                         }}
+        //                     >
+        //                         <h1>
+        //                             Edit your group image
+        //                         </h1>
+        //                         <form
+        //                             onSubmit={(e) => {
+        //                                 e.preventDefault();
+        //                                 editGroupImage();
+        //                             }}
+        //                         >
+        //                             <div className='loginUserContainer'>
+        //                                 <div className='loginUserIcon'>
+        //                                     <i className='fa-solid fa-user-group'></i>
+        //                                 </div>
 
-                            //                                 <input
-                            //                                     type='text'
-                            //                                     placeholder='Gravatar URL'
-                            //                                     onChange={(e) =>
-                            //                                         setFormData(
-                            //                                             {
-                            //                                                 ...formData,
-                            //                                                 url: e
-                            //                                                     .target
-                            //                                                     .value,
-                            //                                             }
-                            //                                         )
-                            //                                     }
-                            //                                     value={
-                            //                                         formData.url
-                            //                                     }
-                            //                                     required
-                            //                                     className='loginInput'
-                            //                                 ></input>
-                            //                             </div>
+        //                                 <input
+        //                                     type='text'
+        //                                     placeholder='Gravatar URL'
+        //                                     onChange={(e) =>
+        //                                         setFormData(
+        //                                             {
+        //                                                 ...formData,
+        //                                                 url: e
+        //                                                     .target
+        //                                                     .value,
+        //                                             }
+        //                                         )
+        //                                     }
+        //                                     value={
+        //                                         formData.url
+        //                                     }
+        //                                     required
+        //                                     className='loginInput'
+        //                                 ></input>
+        //                             </div>
 
-                            //                             <div className='loginLinkContainer'>
-                            //                                 <button
-                            //                                     to='/'
-                            //                                     className='loginPostLink'
-                            //                                 >
-                            //                                     Submit
-                            //                                 </button>
-                            //                             </div>
+        //                             <div className='loginLinkContainer'>
+        //                                 <button
+        //                                     to='/'
+        //                                     className='loginPostLink'
+        //                                 >
+        //                                     Submit
+        //                                 </button>
+        //                             </div>
 
-                            //                             <div className='loginRegisterContainer'>
-                            //                                 <p
-                            //                                     style={{
-                            //                                         margin: '0 auto',
-                            //                                         paddingBottom:
-                            //                                             '5px',
-                            //                                         width: '60%',
-                            //                                     }}
-                            //                                 >
-                            //                                     Want to join a
-                            //                                     group instead?
-                            //                                     Look in the
-                            //                                     group tab to the
-                            //                                     left to find
-                            //                                     open groups.
-                            //                                 </p>
-                            //                             </div>
-                            //                         </form>
-                            //                     </div>
-                            //                 );
-                            //             })}
-                            //     </div>
+        //                             <div className='loginRegisterContainer'>
+        //                                 <p
+        //                                     style={{
+        //                                         margin: '0 auto',
+        //                                         paddingBottom:
+        //                                             '5px',
+        //                                         width: '60%',
+        //                                     }}
+        //                                 >
+        //                                     Want to join a
+        //                                     group instead?
+        //                                     Look in the
+        //                                     group tab to the
+        //                                     left to find
+        //                                     open groups.
+        //                                 </p>
+        //                             </div>
+        //                         </form>
+        //                     </div>
+        //                 );
+        //             })}
+        //     </div>
 
-                            //     <div
-                            //         className='messageBody'
-                            //         style={{
-                            //             position: 'relative',
-                            //             transform: 'translateZ(0)',
-                            //         }}
-                            //     >
-                            //         {/* {userInfo.groupSettingsVisible && (
-                            //             <div className='dialogWindow'>
-                            //                 <div
-                            //                     className='hover'
-                            //                     style={{ padding: '20px' }}
-                            //                     onClick={(e) => {
-                            //                         if (
-                            //                             userInfo.groupSubPage ===
-                            //                             'edit_name'
-                            //                         ) {
-                            //                             setUserInfo(
-                            //                                 (userInfo) => ({
-                            //                                     ...userInfo,
-                            //                                     groupSubPage:
-                            //                                         '',
-                            //                                 })
-                            //                             );
-                            //                         } else {
-                            //                             setUserInfo(
-                            //                                 (userInfo) => ({
-                            //                                     ...userInfo,
-                            //                                     groupSubPage:
-                            //                                         'edit_name',
-                            //                                 })
-                            //                             );
-                            //                         }
+        //     <div
+        //         className='messageBody'
+        //         style={{
+        //             position: 'relative',
+        //             transform: 'translateZ(0)',
+        //         }}
+        //     >
+        //         {/* {userInfo.groupSettingsVisible && (
+        //             <div className='dialogWindow'>
+        //                 <div
+        //                     className='hover'
+        //                     style={{ padding: '20px' }}
+        //                     onClick={(e) => {
+        //                         if (
+        //                             userInfo.groupSubPage ===
+        //                             'edit_name'
+        //                         ) {
+        //                             setUserInfo(
+        //                                 (userInfo) => ({
+        //                                     ...userInfo,
+        //                                     groupSubPage:
+        //                                         '',
+        //                                 })
+        //                             );
+        //                         } else {
+        //                             setUserInfo(
+        //                                 (userInfo) => ({
+        //                                     ...userInfo,
+        //                                     groupSubPage:
+        //                                         'edit_name',
+        //                                 })
+        //                             );
+        //                         }
 
-                            //                         // editGroupName();
-                            //                     }}
-                            //                 >
-                            //                     <i
-                            //                         className='fa-solid fa-signature'
-                            //                         style={{
-                            //                             paddingRight: '10px',
-                            //                         }}
-                            //                     ></i>
-                            //                     Edit group Name
-                            //                 </div>
+        //                         // editGroupName();
+        //                     }}
+        //                 >
+        //                     <i
+        //                         className='fa-solid fa-signature'
+        //                         style={{
+        //                             paddingRight: '10px',
+        //                         }}
+        //                     ></i>
+        //                     Edit group Name
+        //                 </div>
 
-                            //                 <div
-                            //                     className='hover'
-                            //                     style={{ padding: '20px' }}
-                            //                     onClick={(e) => {
-                            //                         if (
-                            //                             userInfo.groupSubPage ===
-                            //                             'edit_image'
-                            //                         ) {
-                            //                             setUserInfo(
-                            //                                 (userInfo) => ({
-                            //                                     ...userInfo,
-                            //                                     groupSubPage:
-                            //                                         '',
-                            //                                 })
-                            //                             );
-                            //                         } else {
-                            //                             setUserInfo(
-                            //                                 (userInfo) => ({
-                            //                                     ...userInfo,
-                            //                                     groupSubPage:
-                            //                                         'edit_image',
-                            //                                 })
-                            //                             );
-                            //                         }
-                            //                     }}
-                            //                 >
-                            //                     <i
-                            //                         className='fa-solid fa-image'
-                            //                         style={{
-                            //                             paddingRight: '10px',
-                            //                         }}
-                            //                     ></i>
-                            //                     Edit group image
-                            //                 </div>
+        //                 <div
+        //                     className='hover'
+        //                     style={{ padding: '20px' }}
+        //                     onClick={(e) => {
+        //                         if (
+        //                             userInfo.groupSubPage ===
+        //                             'edit_image'
+        //                         ) {
+        //                             setUserInfo(
+        //                                 (userInfo) => ({
+        //                                     ...userInfo,
+        //                                     groupSubPage:
+        //                                         '',
+        //                                 })
+        //                             );
+        //                         } else {
+        //                             setUserInfo(
+        //                                 (userInfo) => ({
+        //                                     ...userInfo,
+        //                                     groupSubPage:
+        //                                         'edit_image',
+        //                                 })
+        //                             );
+        //                         }
+        //                     }}
+        //                 >
+        //                     <i
+        //                         className='fa-solid fa-image'
+        //                         style={{
+        //                             paddingRight: '10px',
+        //                         }}
+        //                     ></i>
+        //                     Edit group image
+        //                 </div>
 
-                            //                 <div
-                            //                     className='hover'
-                            //                     style={{ padding: '20px' }}
-                            //                     onClick={(e) => onLeaveGroup(e)}
-                            //                 >
-                            //                     <i
-                            //                         className='fa-solid fa-door-open'
-                            //                         style={{
-                            //                             paddingRight: '10px',
-                            //                         }}
-                            //                     ></i>
-                            //                     Leave Group
-                            //                 </div>
+        //                 <div
+        //                     className='hover'
+        //                     style={{ padding: '20px' }}
+        //                     onClick={(e) => onLeaveGroup(e)}
+        //                 >
+        //                     <i
+        //                         className='fa-solid fa-door-open'
+        //                         style={{
+        //                             paddingRight: '10px',
+        //                         }}
+        //                     ></i>
+        //                     Leave Group
+        //                 </div>
 
-                            //                 <div
-                            //                     className='hover'
-                            //                     style={{ padding: '20px' }}
-                            //                     onClick={(e) =>
-                            //                         console.log(
-                            //                             'TODO: Delete group clicked'
-                            //                         )
-                            //                     }
-                            //                 >
-                            //                     <i
-                            //                         className='fa-solid fa-trash'
-                            //                         style={{
-                            //                             paddingRight: '10px',
-                            //                         }}
-                            //                     ></i>
-                            //                     Delete group
-                            //                 </div>
-                            //             </div>
-                            //         )} */}
-                            //         {serverInfo.listOfMessages.map(
-                            //             (message) => {
-                            //                 return (
-                            //                     <div
-                            //                         className={
-                            //                             message.userId ===
-                            //                             userInfo.userId
-                            //                                 ? 'textRight'
-                            //                                 : ''
-                            //                         }
-                            //                     >
-                            //                         <div
-                            //                             className={
-                            //                                 message.userId ===
-                            //                                 userInfo.userId
-                            //                                     ? 'incomingMessageUser'
-                            //                                     : 'incomingMessageOther'
-                            //                             }
-                            //                             key={message._id}
-                            //                         >
-                            //                             <div
-                            //                                 style={{
-                            //                                     display:
-                            //                                         'inline-block',
-                            //                                 }}
-                            //                             >
-                            //                                 <img
-                            //                                     src={
-                            //                                         message.avatar
-                            //                                     }
-                            //                                     height={'40px'}
-                            //                                     width={'40px'}
-                            //                                     alt='profile'
-                            //                                     style={{
-                            //                                         borderRadius:
-                            //                                             '20px',
-                            //                                         marginRight:
-                            //                                             '10px',
-                            //                                     }}
-                            //                                 ></img>
-                            //                             </div>
-                            //                             <div
-                            //                                 style={{
-                            //                                     display:
-                            //                                         'inline-block',
-                            //                                 }}
-                            //                             >
-                            //                                 <h3
-                            //                                     style={{
-                            //                                         padding:
-                            //                                             '0px',
-                            //                                         margin: '0',
-                            //                                     }}
-                            //                                 >
-                            //                                     {
-                            //                                         message.username
-                            //                                     }
-                            //                                 </h3>
-                            //                                 <p
-                            //                                     style={{
-                            //                                         padding:
-                            //                                             '0px',
-                            //                                         margin: '0',
-                            //                                     }}
-                            //                                 >
-                            //                                     {
-                            //                                         message.message
-                            //                                     }
-                            //                                 </p>
-                            //                             </div>
-                            //                         </div>
-                            //                         <div
-                            //                             className={
-                            //                                 message.userId ===
-                            //                                 userInfo.userId
-                            //                                     ? 'incomingMessageTimeUser'
-                            //                                     : 'incomingMessageTimeOther'
-                            //                             }
-                            //                         >
-                            //                             <div>
-                            //                                 {tConvert(
-                            //                                     dateReadable(
-                            //                                         new Date(
-                            //                                             message.created
-                            //                                         )
-                            //                                     )
-                            //                                 )}
-                            //                             </div>
-                            //                         </div>
-                            //                     </div>
-                            //                 );
-                            //             }
-                            //         )}
-                            //         <div
-                            //             className='scroll'
-                            //             ref={messagesEndRef}
-                            //         />
-                            //     </div>
+        //                 <div
+        //                     className='hover'
+        //                     style={{ padding: '20px' }}
+        //                     onClick={(e) =>
+        //                         console.log(
+        //                             'TODO: Delete group clicked'
+        //                         )
+        //                     }
+        //                 >
+        //                     <i
+        //                         className='fa-solid fa-trash'
+        //                         style={{
+        //                             paddingRight: '10px',
+        //                         }}
+        //                     ></i>
+        //                     Delete group
+        //                 </div>
+        //             </div>
+        //         )} */}
+        //         {serverInfo.listOfMessages.map(
+        //             (message) => {
+        //                 return (
+        //                     <div
+        //                         className={
+        //                             message.userId ===
+        //                             userInfo.userId
+        //                                 ? 'textRight'
+        //                                 : ''
+        //                         }
+        //                     >
+        //                         <div
+        //                             className={
+        //                                 message.userId ===
+        //                                 userInfo.userId
+        //                                     ? 'incomingMessageUser'
+        //                                     : 'incomingMessageOther'
+        //                             }
+        //                             key={message._id}
+        //                         >
+        //                             <div
+        //                                 style={{
+        //                                     display:
+        //                                         'inline-block',
+        //                                 }}
+        //                             >
+        //                                 <img
+        //                                     src={
+        //                                         message.avatar
+        //                                     }
+        //                                     height={'40px'}
+        //                                     width={'40px'}
+        //                                     alt='profile'
+        //                                     style={{
+        //                                         borderRadius:
+        //                                             '20px',
+        //                                         marginRight:
+        //                                             '10px',
+        //                                     }}
+        //                                 ></img>
+        //                             </div>
+        //                             <div
+        //                                 style={{
+        //                                     display:
+        //                                         'inline-block',
+        //                                 }}
+        //                             >
+        //                                 <h3
+        //                                     style={{
+        //                                         padding:
+        //                                             '0px',
+        //                                         margin: '0',
+        //                                     }}
+        //                                 >
+        //                                     {
+        //                                         message.username
+        //                                     }
+        //                                 </h3>
+        //                                 <p
+        //                                     style={{
+        //                                         padding:
+        //                                             '0px',
+        //                                         margin: '0',
+        //                                     }}
+        //                                 >
+        //                                     {
+        //                                         message.message
+        //                                     }
+        //                                 </p>
+        //                             </div>
+        //                         </div>
+        //                         <div
+        //                             className={
+        //                                 message.userId ===
+        //                                 userInfo.userId
+        //                                     ? 'incomingMessageTimeUser'
+        //                                     : 'incomingMessageTimeOther'
+        //                             }
+        //                         >
+        //                             <div>
+        //                                 {tConvert(
+        //                                     dateReadable(
+        //                                         new Date(
+        //                                             message.created
+        //                                         )
+        //                                     )
+        //                                 )}
+        //                             </div>
+        //                         </div>
+        //                     </div>
+        //                 );
+        //             }
+        //         )}
+        //         <div
+        //             className='scroll'
+        //             ref={messagesEndRef}
+        //         />
+        //     </div>
 
-                            //     <form
-                            //         onSubmit={(e) => {
-                            //             onSubmit(e);
-                            //         }}
-                            //     >
-                            //         <div className='messageInput'>
-                            //             <div className='emojiButton'>
-                            //                 <i className='fa-regular fa-face-smile hover'></i>
-                            //             </div>
-                            //             <div className='attatchmentButton'>
-                            //                 <i className='fa-solid fa-paperclip hover'></i>
-                            //             </div>
-                            //             <input
-                            //                 type='text'
-                            //                 placeholder='Type in your message'
-                            //                 className='sendInput'
-                            //                 onChange={(e) =>
-                            //                     setFormData({
-                            //                         ...formData,
-                            //                         message: e.target.value,
-                            //                     })
-                            //                 }
-                            //             ></input>
-                            //             <div className='sendButton'>
-                            //                 <i className='fa-regular fa-paper-plane hover'></i>
-                            //             </div>
-                            //         </div>
-                            //     </form>
-                            // </div>
+        //     <form
+        //         onSubmit={(e) => {
+        //             onSubmit(e);
+        //         }}
+        //     >
+        //         <div className='messageInput'>
+        //             <div className='emojiButton'>
+        //                 <i className='fa-regular fa-face-smile hover'></i>
+        //             </div>
+        //             <div className='attatchmentButton'>
+        //                 <i className='fa-solid fa-paperclip hover'></i>
+        //             </div>
+        //             <input
+        //                 type='text'
+        //                 placeholder='Type in your message'
+        //                 className='sendInput'
+        //                 onChange={(e) =>
+        //                     setFormData({
+        //                         ...formData,
+        //                         message: e.target.value,
+        //                     })
+        //                 }
+        //             ></input>
+        //             <div className='sendButton'>
+        //                 <i className='fa-regular fa-paper-plane hover'></i>
+        //             </div>
+        //         </div>
+        //     </form>
+        // </div>
         //                 );
         //             } else {
         //                 return <></>;
