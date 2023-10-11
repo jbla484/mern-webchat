@@ -30,6 +30,10 @@ const GroupSchema = new mongoose.Schema({
         type: Date,
         default: new Date(),
     },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+    },
     lastUpdated: {
         type: Date,
         default: new Date(),

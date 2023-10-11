@@ -1,0 +1,10 @@
+{
+    "dependencies": {
+        "concurrently": "^8.2.1"
+    },
+    "scripts": {
+        "server": "cd server && npm start",
+        "client": "cd client/webchat && npm start",
+        "dev": "concurrently \"npm run server\" \"npm run client\""
+    }
+}

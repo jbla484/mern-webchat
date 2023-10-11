@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-import socket from '../socket/socket';
+import socket from '../../socket/socket';
 
 function Register() {
     let navigate = useNavigate();
@@ -18,7 +18,7 @@ function Register() {
 
         if (formData.password !== formData.password2) {
             // todo: add proper alerts on the page
-            console.error('Please enter the same password');
+            onError('Please enter the same password');
         } else {
             const newUser = {
                 username: formData.name,
@@ -32,25 +32,29 @@ function Register() {
     function onUserRegister(arg) {
         console.log(`Created user: ${arg.username}, ${arg._id}`);
         navigate('/login');
+    }
 
-        // setUserInfo((userInfo) => ({
-        //     ...userInfo,
-        //     currentPage: 'login',
-        // }));
+    function onError(error) {
+        console.log(error);
+        document.getElementById('errorMessage').innerHTML = error;
+        document.getElementById('errorMessage').style.display = 'block';
     }
 
     useEffect(() => {
         socket.on('user_register', onUserRegister);
 
+        socket.on('error', onError);
+
         return function cleanup() {
             socket.removeListener('user_register');
+            socket.removeListener('error');
         };
     }, []);
 
     return (
         <header id='App-header'>
             <div className='loginContainer'>
-                <h1>Sign Up</h1>
+                <h1 style={{ margin: '0 0 20px 0' }}>Sign Up</h1>
                 <form
                     onSubmit={(e) => {
                         onSubmit(e);
@@ -159,8 +163,18 @@ function Register() {
                         ></input>
                     </div>
 
+                    <div className='errorContainer'>
+                        <p
+                            id='errorMessage'
+                            style={{ display: 'none' }}
+                        ></p>
+                    </div>
+
                     <div className='loginLinkContainer'>
-                        <button to='/' className='loginPostLink'>
+                        <button
+                            to='/'
+                            className='loginPostLink'
+                        >
                             Submit
                         </button>
                     </div>

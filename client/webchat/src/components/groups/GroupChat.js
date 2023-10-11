@@ -1,17 +1,25 @@
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import socket from '../../socket/socket';
+import EmojiPicker from 'emoji-picker-react';
 
-import socket from '../socket/socket';
-
-function GroupChat({ user }) {
+function GroupChat({ user, setUser }) {
+    let navigate = useNavigate();
     const { id } = useParams();
-    const [formData, setFormData] = useState({
-        name: '',
-        avatar: '',
+    const messagesEndRef = useRef(null);
+    const [message, setMessage] = useState('');
+
+    const [groupInfo, setGroupInfo] = useState({
+        group: {},
+        groupMessages: [],
     });
 
-    const [group, setGroup] = useState({});
+    const [settingsVisible, setSettingsVisible] = useState(false);
+    const [emojiVisible, setEmojiVisible] = useState(false);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
+    };
 
     function dateReadable(date) {
         return (
@@ -19,6 +27,29 @@ function GroupChat({ user }) {
             ':' +
             ('00' + date.getMinutes()).slice(-2)
         );
+    }
+
+    async function onLeaveGroup(e) {
+        e.preventDefault();
+        if (!user._id) console.error('Please login!'); //
+
+        const info = {
+            userId: user._id,
+            groupId: id,
+        };
+
+        socket.emit('group_leave', info);
+    }
+
+    function onEmojiClick(emojiData, event) {
+        setMessage(
+            (message) =>
+                message +
+                (emojiData.isCustom ? emojiData.unified : emojiData.emoji)
+        );
+        // console.log(event);
+        document.getElementById('sendInput').focus();
+        document.getElementById('sendInput').setSelectionRange(-1, -1);
     }
 
     function tConvert(time) {
@@ -36,90 +67,90 @@ function GroupChat({ user }) {
         return time.join(''); // return adjusted time or original string
     }
 
-    function onGroupMessage(messages) {
-        console.log(`messages: ${messages}`);
-        // setServerInfo((serverInfo) => ({
-        //     ...serverInfo,
-        //     listOfMessages: messages,
-        // }));
+    function onGroupGet(group) {
+        setGroupInfo((groupInfo) => ({
+            ...groupInfo,
+            group,
+            groupMessages: group.messages,
+        }));
+        console.log('group');
+    }
+
+    function onGroupMessages(messages) {
+        setGroupInfo((groupInfo) => ({
+            ...groupInfo,
+            groupMessages: messages,
+        }));
+        console.log('group message');
+    }
+
+    function onGroupLeave(joinedGroups) {
+        setUser((user) => ({
+            ...user,
+            joinedGroups,
+        }));
+        navigate('/groups');
     }
 
     useEffect(() => {
-        socket.on('group_message_add', onGroupMessage);
+        socket.on('group_get', onGroupGet);
+        socket.on('group_message_add', onGroupMessages);
+        socket.on('group_leave', onGroupLeave);
 
-        // pull group id from url,
-        console.log(id);
-        // async call to get group info, save it in state?
-        const group = {
-            name: formData.name,
-            avatar: formData.avatar,
-        };
-
-        socket.emit('group_create', group);
-        setGroup({});
+        socket.emit('group_get', id);
 
         return function cleanup() {
+            socket.removeListener('group_get');
             socket.removeListener('group_message_add');
+            socket.removeListener('group_leave');
         };
     }, []);
 
-    async function eGroupCreate(e) {
-        e.preventDefault();
-
-        const group = {
-            name: formData.name,
-            avatar: formData.avatar,
-        };
-
-        socket.emit('group_create', group);
-    }
+    useEffect(() => {
+        scrollToBottom();
+    }, [groupInfo.groupMessages]);
 
     return (
-        <header id='App-header2'>
+        <header id='App-header3'>
             <div className='messageGroup'>
-                <div className='userImage column3image'>
+                <div
+                    className='groupChatHeader'
+                    onClick={(e) => {
+                        navigate(`/groups/${id}/info`);
+                    }}
+                >
                     <img
-                        src={group.avatar}
+                        src={groupInfo.group.avatar}
                         height={'40px'}
                         width={'40px'}
                         alt='group'
-                        style={{ borderRadius: '20px' }}
+                        style={{ borderRadius: '10px' }}
                     ></img>
                 </div>
-                <div className='userName'>
-                    <b>{group.name}</b>
-                </div>
                 <div
-                    className='chatExpandButton'
-                    // onClick={(e) => switchToFullScreen(e)}
+                    className='userName'
+                    onClick={(e) => {
+                        navigate(`/groups/${id}/info`);
+                    }}
                 >
-                    <i className='fa-solid fa-expand hover'></i>
+                    <b>{groupInfo.group.name}</b>
                 </div>
                 <div
                     className='chatSettingsButton'
-                    // onClick={(e) => setGroupSettings(e)}
+                    onClick={(e) => {
+                        setSettingsVisible(!settingsVisible);
+                    }}
                 >
                     <i className='fa-solid fa-gear hover'></i>
                 </div>
 
-                {user.settingsVisible && (
+                {settingsVisible && (
                     <div className='dialogWindow'>
                         <div
                             className='hover'
                             style={{ padding: '20px' }}
                             onClick={(e) => {
-                                // if (userInfo.groupSubPage === 'edit_name') {
-                                //     setUserInfo((userInfo) => ({
-                                //         ...userInfo,
-                                //         groupSubPage: '',
-                                //     }));
-                                // } else {
-                                //     setUserInfo((userInfo) => ({
-                                //         ...userInfo,
-                                //         groupSubPage: 'edit_name',
-                                //     }));
-                                // }
-                                // editGroupName();
+                                navigate(`/groups/${id}/edit`);
                             }}
                         >
                             <i
@@ -128,39 +159,13 @@ function GroupChat({ user }) {
                                     paddingRight: '10px',
                                 }}
                             ></i>
-                            Edit group Name
+                            Edit Group
                         </div>
 
                         <div
                             className='hover'
                             style={{ padding: '20px' }}
-                            onClick={(e) => {
-                                // if (userInfo.groupSubPage === 'edit_image') {
-                                //     setUserInfo((userInfo) => ({
-                                //         ...userInfo,
-                                //         groupSubPage: '',
-                                //     }));
-                                // } else {
-                                //     setUserInfo((userInfo) => ({
-                                //         ...userInfo,
-                                //         groupSubPage: 'edit_image',
-                                //     }));
-                                // }
-                            }}
-                        >
-                            <i
-                                className='fa-solid fa-image'
-                                style={{
-                                    paddingRight: '10px',
-                                }}
-                            ></i>
-                            Edit group image
-                        </div>
-
-                        <div
-                            className='hover'
-                            style={{ padding: '20px' }}
-                            // onClick={(e) => onLeaveGroup(e)}
+                            onClick={(e) => onLeaveGroup(e)}
                         >
                             <i
                                 className='fa-solid fa-door-open'
@@ -170,50 +175,36 @@ function GroupChat({ user }) {
                             ></i>
                             Leave Group
                         </div>
-
-                        <div
-                            className='hover'
-                            style={{ padding: '20px' }}
-                            onClick={(e) =>
-                                console.log('TODO: Delete group clicked')
-                            }
-                        >
-                            <i
-                                className='fa-solid fa-trash'
-                                style={{
-                                    paddingRight: '10px',
-                                }}
-                            ></i>
-                            Delete group
-                        </div>
                     </div>
                 )}
             </div>
 
             <div
                 className='messageBody'
-                style={{
-                    position: 'relative',
-                    transform: 'translateZ(0)',
-                }}
+                style={
+                    {
+                        // position: 'relative',
+                        // transform: 'translateZ(0)',
+                    }
+                }
             >
-                {group.messages ? (
-                    group.messages.map((message) => {
+                {groupInfo.groupMessages ? (
+                    groupInfo.groupMessages.map((message, i) => {
                         return (
                             <div
-                            // className={
-                            //     message.userId === userInfo.userId
-                            //         ? 'textRight'
-                            //         : ''
-                            // }
+                                className={
+                                    message.userId === user._id
+                                        ? 'textRight'
+                                        : ''
+                                }
+                                key={i}
                             >
                                 <div
-                                    // className={
-                                    //     message.userId === userInfo.userId
-                                    //         ? 'incomingMessageUser'
-                                    //         : 'incomingMessageOther'
-                                    // }
-                                    key={message._id}
+                                    className={
+                                        message.userId === user._id
+                                            ? 'incomingMessageUser'
+                                            : 'incomingMessageOther'
+                                    }
                                 >
                                     <div
                                         style={{
@@ -226,7 +217,7 @@ function GroupChat({ user }) {
                                             width={'40px'}
                                             alt='profile'
                                             style={{
-                                                borderRadius: '20px',
+                                                borderRadius: '10px',
                                                 marginRight: '10px',
                                             }}
                                         ></img>
@@ -255,11 +246,11 @@ function GroupChat({ user }) {
                                     </div>
                                 </div>
                                 <div
-                                // className={
-                                //     message.userId === userInfo.userId
-                                //         ? 'incomingMessageTimeUser'
-                                //         : 'incomingMessageTimeOther'
-                                // }
+                                    className={
+                                        message.userId === user._id
+                                            ? 'incomingMessageTimeUser'
+                                            : 'incomingMessageTimeOther'
+                                    }
                                 >
                                     <div>
                                         {tConvert(
@@ -275,16 +266,40 @@ function GroupChat({ user }) {
                 ) : (
                     <div>Couldn't get messages...</div>
                 )}
-                {/* <div className='scroll' ref={messagesEndRef} /> */}
+                {emojiVisible && (
+                    <EmojiPicker
+                        onEmojiClick={onEmojiClick}
+                        autoFocusSearch={false}
+                    />
+                )}
+                <div
+                    className='scroll'
+                    ref={messagesEndRef}
+                />
             </div>
 
             <form
                 onSubmit={(e) => {
-                    // onSubmit(e);
+                    e.preventDefault();
+                    const newMessage = {
+                        username: user.username,
+                        message,
+                        userId: user._id,
+                        groupId: id,
+                    };
+
+                    socket.emit('group_message_add', newMessage);
+                    setMessage('');
                 }}
+                style={{ width: '100%' }}
             >
                 <div className='messageInput'>
-                    <div className='emojiButton'>
+                    <div
+                        className='emojiButton'
+                        onClick={(e) => {
+                            setEmojiVisible(!emojiVisible);
+                        }}
+                    >
                         <i className='fa-regular fa-face-smile hover'></i>
                     </div>
                     <div className='attatchmentButton'>
@@ -294,14 +309,24 @@ function GroupChat({ user }) {
                         type='text'
                         placeholder='Type in your message'
                         className='sendInput'
-                        onChange={(e) =>
-                            setFormData({
-                                ...formData,
-                                message: e.target.value,
-                            })
-                        }
+                        id='sendInput'
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
                     ></input>
-                    <div className='sendButton'>
+                    <div
+                        className='sendButton'
+                        onClick={() => {
+                            const newMessage = {
+                                username: user.username,
+                                message,
+                                userId: user._id,
+                                groupId: id,
+                            };
+
+                            socket.emit('group_message_add', newMessage);
+                            setMessage('');
+                        }}
+                    >
                         <i className='fa-regular fa-paper-plane hover'></i>
                     </div>
                 </div>

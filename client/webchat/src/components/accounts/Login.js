@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import socket from '../socket/socket';
+import socket from '../../socket/socket';
 
 function Login({ setUser }) {
     let navigate = useNavigate();
@@ -18,30 +18,46 @@ function Login({ setUser }) {
             password: formData.password,
         };
 
-        console.log('user submit login');
         socket.emit('client_user_login', user);
     }
 
-    function onUserLogin(arg) {
-        console.log('onUserLogin');
-        console.log(arg);
+    async function loginDemo(e) {
+        e.preventDefault();
 
-        setUser(arg);
-        navigate('/dashboard');
+        const user = {
+            email: 'j@j.com',
+            password: 'password',
+        };
+
+        socket.emit('client_user_login', user);
+    }
+
+    function onUserLogin(user) {
+        setUser(user);
+        navigate('/groups');
+    }
+
+    function onError(error) {
+        console.log(error);
+        document.getElementById('errorMessage').innerHTML = error;
+        document.getElementById('errorMessage').style.display = 'block';
     }
 
     useEffect(() => {
         socket.on('server_user_login', onUserLogin);
 
+        socket.on('error', onError);
+
         return function cleanup() {
             socket.removeListener('server_user_login');
+            socket.removeListener('error');
         };
     }, []);
 
     return (
         <header id='App-header'>
             <div className='loginContainer'>
-                <h1>Log In</h1>
+                <h1 style={{ margin: '0 0 20px 0' }}>Log In</h1>
                 <form
                     onSubmit={(e) => {
                         loginSubmit(e);
@@ -105,11 +121,31 @@ function Login({ setUser }) {
                             className='loginInput'
                         ></input>
                     </div>
+                    <Link
+                        className='recoverLink'
+                        onClick={(e) => {
+                            loginDemo(e);
+                        }}
+                    >
+                        Use demo account
+                    </Link>
+                    <div className='errorContainer'>
+                        <p
+                            id='errorMessage'
+                            style={{ display: 'none' }}
+                        ></p>
+                    </div>
                     <div className='loginLinkContainer'>
-                        <Link to='/recover' className='recoverLink'>
+                        <Link
+                            to='/recover'
+                            className='recoverLink'
+                        >
                             Forgot Password
                         </Link>
-                        <button to='/' className='loginPostLink'>
+                        <button
+                            to='/'
+                            className='loginPostLink'
+                        >
                             Login
                         </button>
                     </div>
