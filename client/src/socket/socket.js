@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
 // var ip = require('ip').address();
-const socket = io(`https://mern-webchat.onrender.com:3001`);
+const socket = io(`https://jamesb-webchat.netlify.app/:3001`);
 
 export default socket;
