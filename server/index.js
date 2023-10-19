@@ -14,7 +14,7 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server, {
     cors: {
-        origin: `https://mern-webchat.onrender.com:3000`,
+        origin: `https://jamesb-webchat.netlify.app:3000`,
         methods: ['GET', 'POST'],
     },
 });
