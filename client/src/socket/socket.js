@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
-const socket = io(`wss://mern-webchat.onrender.com`, {
+const socket = io(`https://mern-webchat.onrender.com`, {
     autoConnect: false,
     transports: ['websocket'],
 });
