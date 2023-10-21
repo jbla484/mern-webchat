@@ -1,10 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import socket from '../../socket/socket';
 
 function Register() {
     let navigate = useNavigate();
+
+    const passwordRef = useRef(null);
+    const eyeRef = useRef(null);
+
+    const passwordRef2 = useRef(null);
+    const eyeRef2 = useRef(null);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -45,6 +51,36 @@ function Register() {
 
         socket.on('error', onError);
 
+        const togglePassword = eyeRef.current;
+        const password = passwordRef.current;
+
+        togglePassword.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type =
+                password.getAttribute('type') === 'password'
+                    ? 'text'
+                    : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+            this.classList.toggle('fa-eye');
+        });
+
+        const togglePassword2 = eyeRef2.current;
+        const password2 = passwordRef2.current;
+
+        togglePassword2.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type =
+                password2.getAttribute('type') === 'password'
+                    ? 'text'
+                    : 'password';
+            password2.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+            this.classList.toggle('fa-eye');
+        });
+
         return function cleanup() {
             socket.removeListener('user_register');
             socket.removeListener('error');
@@ -53,23 +89,14 @@ function Register() {
 
     return (
         <header id='App-header'>
-            <div className='loginContainer'>
+            <div className='registerContainer'>
                 <h1 style={{ margin: '0 0 20px 0' }}>Sign Up</h1>
                 <form
                     onSubmit={(e) => {
                         onSubmit(e);
                     }}
                 >
-                    <div style={{ textAlign: 'left' }}>
-                        <p
-                            style={{ margin: '0', fontSize: '18px' }}
-                            className='grayColor'
-                        >
-                            Username
-                        </p>
-                    </div>
-                    <div className='loginUserContainer'>
-                        <i className='fa-regular fa-user grayColor'></i>
+                    <div>
                         <input
                             type='text'
                             placeholder='Username'
@@ -85,18 +112,7 @@ function Register() {
                             autoFocus
                         ></input>
                     </div>
-
-                    <div style={{ textAlign: 'left' }}>
-                        <p
-                            style={{ margin: '0', fontSize: '18px' }}
-                            className='grayColor'
-                        >
-                            Email
-                        </p>
-                    </div>
-                    <div className='loginUserContainer'>
-                        <i className='fa-solid fa-envelope grayColor'></i>
-
+                    <div>
                         <input
                             type='email'
                             placeholder='Email Address'
@@ -110,17 +126,7 @@ function Register() {
                             className='loginInput'
                         ></input>
                     </div>
-
-                    <div style={{ textAlign: 'left' }}>
-                        <p
-                            style={{ margin: '0', fontSize: '18px' }}
-                            className='grayColor'
-                        >
-                            Password
-                        </p>
-                    </div>
-                    <div className='loginUserContainer'>
-                        <i className='fa-solid fa-key grayColor'></i>
+                    <div>
                         <input
                             type='password'
                             placeholder='Password'
@@ -134,19 +140,16 @@ function Register() {
                             }
                             value={formData.password}
                             className='loginInput'
+                            ref={passwordRef}
                         ></input>
+                        <i
+                            className='far fa-eye'
+                            ref={eyeRef}
+                            id='togglePassword'
+                        ></i>
                     </div>
 
-                    <div style={{ textAlign: 'left' }}>
-                        <p
-                            style={{ margin: '0', fontSize: '18px' }}
-                            className='grayColor'
-                        >
-                            Confirm Password
-                        </p>
-                    </div>
-                    <div className='loginUserContainer'>
-                        <i className='fa-solid fa-lock grayColor'></i>
+                    <div>
                         <input
                             type='password'
                             placeholder='Confirm Password'
@@ -160,7 +163,13 @@ function Register() {
                             }
                             value={formData.password2}
                             className='loginInput'
+                            ref={passwordRef2}
                         ></input>
+                        <i
+                            className='far fa-eye'
+                            ref={eyeRef2}
+                            id='togglePassword'
+                        ></i>
                     </div>
 
                     <div className='errorContainer'>
@@ -179,19 +188,16 @@ function Register() {
                         </button>
                     </div>
 
-                    <div className='loginRegisterContainer'>
-                        <div style={{ margin: '0', paddingBottom: '40px' }}>
-                            <p style={{ margin: '0', paddingBottom: '5px' }}>
-                                Already have an account?
-                            </p>
-                            <Link
-                                to='/login'
-                                className='registerButton'
-                                // onClick={() => props.setter('login')}
-                            >
-                                Sign In
-                            </Link>
-                        </div>
+                    <div style={{ margin: '0', paddingBottom: '20px' }}>
+                        <p style={{ margin: '0', paddingBottom: '5px' }}>
+                            Already have an account?
+                        </p>
+                        <Link
+                            to='/login'
+                            className='registerButton'
+                        >
+                            Sign In
+                        </Link>
                     </div>
                 </form>
             </div>

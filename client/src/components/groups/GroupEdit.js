@@ -55,7 +55,7 @@ function GroupEdit({ user, setUser }) {
 
     return (
         <header id='App-header'>
-            <div className='loginContainer'>
+            <div className='registerContainer'>
                 <h1>Edit Group</h1>
                 <form
                     onSubmit={(e) => {
@@ -63,20 +63,20 @@ function GroupEdit({ user, setUser }) {
                         editGroupName();
                     }}
                 >
-                    <div style={{ textAlign: 'left' }}>
-                        <p
-                            style={{ margin: '0', fontSize: '18px' }}
-                            className='grayColor'
-                        >
-                            Name
-                        </p>
-                    </div>
                     {/* TODO: since the name is populated, cant submit unless name is removed from input field */}
-                    <div className='loginUserContainer'>
-                        <i
-                            className='fa-solid fa-user-group grayColor'
-                            style={{ marginRight: '10px' }}
-                        ></i>
+                    <div>
+                        <div style={{ textAlign: 'left' }}>
+                            <p
+                                style={{
+                                    margin: '0',
+                                    fontSize: '18px',
+                                    transform: 'translateX(2px)',
+                                }}
+                                className='grayColor'
+                            >
+                                Name
+                            </p>
+                        </div>
                         <input
                             type='text'
                             placeholder='Group Name'
@@ -92,19 +92,19 @@ function GroupEdit({ user, setUser }) {
                         ></input>
                     </div>
 
-                    <div style={{ textAlign: 'left' }}>
-                        <p
-                            style={{ margin: '0', fontSize: '18px' }}
-                            className='grayColor'
-                        >
-                            Avatar
-                        </p>
-                    </div>
-                    <div className='loginUserContainer'>
-                        <i
-                            className='fa-solid fa-user-group grayColor'
-                            style={{ marginRight: '10px' }}
-                        ></i>
+                    <div>
+                        <div style={{ textAlign: 'left' }}>
+                            <p
+                                style={{
+                                    margin: '0',
+                                    fontSize: '18px',
+                                    transform: 'translateX(2px)',
+                                }}
+                                className='grayColor'
+                            >
+                                Avatar
+                            </p>
+                        </div>
                         <input
                             type='text'
                             placeholder='Gravatar URL'
@@ -119,19 +119,19 @@ function GroupEdit({ user, setUser }) {
                         ></input>
                     </div>
 
-                    <div style={{ textAlign: 'left' }}>
-                        <p
-                            style={{ margin: '0', fontSize: '18px' }}
-                            className='grayColor'
-                        >
-                            Description
-                        </p>
-                    </div>
-                    <div className='loginUserContainer'>
-                        <i
-                            className='fa-solid fa-user-group grayColor'
-                            style={{ marginRight: '10px' }}
-                        ></i>
+                    <div>
+                        <div style={{ textAlign: 'left' }}>
+                            <p
+                                style={{
+                                    margin: '0',
+                                    fontSize: '18px',
+                                    transform: 'translateX(2px)',
+                                }}
+                                className='grayColor'
+                            >
+                                Description
+                            </p>
+                        </div>
                         <input
                             type='text'
                             placeholder='Description'
@@ -166,12 +166,11 @@ function GroupEdit({ user, setUser }) {
                         <p
                             style={{
                                 margin: '0 auto',
-                                paddingBottom: '5px',
-                                width: '60%',
+                                width: '90%',
                             }}
                         >
-                            Want to join a group instead? Look in the group tab
-                            to the left to find open groups.
+                            Want to join a group instead? Look for an open group
+                            on the groups page.
                         </p>
                     </div>
                 </form>

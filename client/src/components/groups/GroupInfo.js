@@ -49,6 +49,13 @@ function GroupInfo({ user, setUser }) {
         };
     }, []);
 
+    const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    };
+
     return (
         <header id='App-header'>
             <div className='joinContainer'>
@@ -68,7 +75,7 @@ function GroupInfo({ user, setUser }) {
                 </div>
                 <div
                     className='width802'
-                    style={{ textAlign: 'left', width: '60%' }}
+                    style={{ textAlign: 'left', width: '100%' }}
                 >
                     <div>
                         <b>Owner:</b> <span>{groupOwner.username}</span>
@@ -78,7 +85,12 @@ function GroupInfo({ user, setUser }) {
                     </div>
                     <div>
                         <b>Created:</b>{' '}
-                        <span>{new Date(group.created).toDateString()}</span>
+                        <span>
+                            {new Date(group.created).toLocaleDateString(
+                                undefined,
+                                options
+                            )}
+                        </span>
                     </div>
                     <div>
                         <b>Ranking:</b> <span>{group.ranking}</span>

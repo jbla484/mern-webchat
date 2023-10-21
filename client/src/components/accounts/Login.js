@@ -1,9 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import socket from '../../socket/socket';
 
 function Login({ setUser }) {
     let navigate = useNavigate();
+
+    const passwordRef = useRef(null);
+    const eyeRef = useRef(null);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -48,6 +51,21 @@ function Login({ setUser }) {
 
         socket.on('error', onError);
 
+        const togglePassword = eyeRef.current;
+        const password = passwordRef.current;
+
+        togglePassword.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type =
+                password.getAttribute('type') === 'password'
+                    ? 'text'
+                    : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+            this.classList.toggle('fa-eye');
+        });
+
         return function cleanup() {
             socket.removeListener('server_user_login');
             socket.removeListener('error');
@@ -56,27 +74,14 @@ function Login({ setUser }) {
 
     return (
         <header id='App-header'>
-            <div className='loginContainer'>
+            <div className='registerContainer'>
                 <h1 style={{ margin: '0 0 20px 0' }}>Log In</h1>
                 <form
                     onSubmit={(e) => {
                         loginSubmit(e);
                     }}
                 >
-                    <div style={{ textAlign: 'left' }}>
-                        <p
-                            style={{ margin: '0', fontSize: '18px' }}
-                            className='grayColor'
-                        >
-                            Email
-                        </p>
-                    </div>
-
-                    <div className='loginUserContainer'>
-                        <i
-                            className='fa-solid fa-envelope grayColor'
-                            style={{ marginRight: '10px' }}
-                        ></i>
+                    <div>
                         <input
                             type='email'
                             placeholder='Email Address'
@@ -93,19 +98,7 @@ function Login({ setUser }) {
                         ></input>
                     </div>
 
-                    <div style={{ textAlign: 'left' }}>
-                        <p
-                            style={{ margin: '0', fontSize: '18px' }}
-                            className='grayColor'
-                        >
-                            Password
-                        </p>
-                    </div>
-                    <div className='loginUserContainer'>
-                        <i
-                            className='fa-solid fa-key grayColor'
-                            style={{ marginRight: '10px' }}
-                        ></i>
+                    <div>
                         <input
                             type='password'
                             placeholder='Password'
@@ -119,16 +112,24 @@ function Login({ setUser }) {
                             }
                             value={formData.password}
                             className='loginInput'
+                            ref={passwordRef}
                         ></input>
+                        <i
+                            className='far fa-eye'
+                            ref={eyeRef}
+                            id='togglePassword'
+                        ></i>
                     </div>
-                    <Link
-                        className='recoverLink'
-                        onClick={(e) => {
-                            loginDemo(e);
-                        }}
-                    >
-                        Use demo account
-                    </Link>
+                    <div style={{ margin: '10px 0 20px 0' }}>
+                        <Link
+                            className='recoverLink'
+                            onClick={(e) => {
+                                loginDemo(e);
+                            }}
+                        >
+                            Use demo account
+                        </Link>
+                    </div>
                     <div className='errorContainer'>
                         <p
                             id='errorMessage'

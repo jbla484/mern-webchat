@@ -29,3 +29,9 @@ Messages:
 		- User can follow other people
 			- update database to hold array of followed people, as well as followers
 		
+
+
+
+Navigate to the dash when a user registers, who wants to type their information in twice?
+
+close emoji windows when sent?

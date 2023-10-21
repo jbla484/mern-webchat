@@ -48,27 +48,14 @@ function GroupAdd({ user }) {
 
     return (
         <header id='App-header'>
-            <div className='loginContainer'>
+            <div className='registerContainer'>
                 <h1 style={{ margin: '0 0 20px 0' }}>Create A Group</h1>
                 <form
                     onSubmit={(e) => {
                         eGroupCreate(e);
                     }}
                 >
-                    <div style={{ textAlign: 'left' }}>
-                        <p
-                            style={{ margin: '0', fontSize: '18px' }}
-                            className='grayColor'
-                        >
-                            Name
-                        </p>
-                    </div>
-                    <div className='loginUserContainer'>
-                        <i
-                            className='fa-solid fa-user-group grayColor'
-                            style={{ marginRight: '10px' }}
-                        ></i>
-
+                    <div>
                         <input
                             type='text'
                             placeholder='Name'
@@ -84,23 +71,10 @@ function GroupAdd({ user }) {
                         ></input>
                     </div>
 
-                    <div style={{ textAlign: 'left' }}>
-                        <p
-                            style={{ margin: '0', fontSize: '18px' }}
-                            className='grayColor'
-                        >
-                            Gravatar URL
-                        </p>
-                    </div>
-                    <div className='loginUserContainer'>
-                        <i
-                            className='fa-solid fa-image grayColor'
-                            style={{ marginRight: '10px' }}
-                        ></i>
-
+                    <div>
                         <input
                             type='text'
-                            placeholder='Url'
+                            placeholder='Gravatar Url'
                             onChange={(e) =>
                                 setFormData({
                                     ...formData,
@@ -112,20 +86,7 @@ function GroupAdd({ user }) {
                         ></input>
                     </div>
 
-                    <div style={{ textAlign: 'left' }}>
-                        <p
-                            style={{ margin: '0', fontSize: '18px' }}
-                            className='grayColor'
-                        >
-                            Description
-                        </p>
-                    </div>
-                    <div className='loginUserContainer'>
-                        <i
-                            className='fa-solid fa-image grayColor'
-                            style={{ marginRight: '10px' }}
-                        ></i>
-
+                    <div>
                         <input
                             type='text'
                             placeholder='Description'
@@ -164,12 +125,11 @@ function GroupAdd({ user }) {
                         <p
                             style={{
                                 margin: '0 auto',
-                                paddingBottom: '5px',
-                                width: '60%',
+                                width: '90%',
                             }}
                         >
-                            Want to join a group instead? Look in the group tab
-                            to the left to find open groups.
+                            Want to join a group instead? Look for an open group
+                            on the groups page.
                         </p>
                     </div>
                 </form>
