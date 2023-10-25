@@ -267,7 +267,7 @@ input {
 }
 
 .userInfoContainer {
-    background-color: #b6b6b688;
+    background-color: #ffffff;
     border-radius: 10px;
     position: fixed;
     font-size: 16px;
@@ -276,6 +276,8 @@ input {
     flex-direction: column;
     justify-content: center;
     padding: 20px;
+    border: 1px solid rgba(192, 192, 192, 0.297);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .registerContainer input {
