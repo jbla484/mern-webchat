@@ -1,9 +1,14 @@
 import './styles/App.css';
 import Landing from './components/Landing';
-import Login from './components/accounts/Login';
-import Register from './components/accounts/Register';
 import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
+import Leaderboards from './components/Leaderboards';
+
+// Auth components
+import Login from './components/accounts/Login';
+import Register from './components/accounts/Register';
+
+// Group components
 import Groups from './components/groups/Groups';
 import GroupAdd from './components/groups/GroupAdd';
 import GroupChat from './components/groups/GroupChat';
@@ -11,7 +16,9 @@ import GroupJoin from './components/groups/GroupJoin';
 import GroupInfo from './components/groups/GroupInfo';
 import GroupEdit from './components/groups/GroupEdit';
 
-import Leaderboards from './components/Leaderboards';
+// User components
+import UserInfo from './components/users/UserInfo';
+import UserEdit from './components/users/UserEdit';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -121,6 +128,16 @@ function App() {
                             user={user}
                         />
                     }
+                />
+                <Route
+                    exact
+                    path='/users/:id/info'
+                    element={<UserInfo />}
+                />
+                <Route
+                    exact
+                    path='/users/:id/edit'
+                    element={<UserEdit />}
                 />
             </Routes>
         </BrowserRouter>

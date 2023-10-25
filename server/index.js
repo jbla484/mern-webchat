@@ -188,6 +188,20 @@ io.on('connection', (socket) => {
         socket.emit('group_get', group);
     });
 
+    // GETS a specific user based on a user id
+    socket.on('user_get', async (userId) => {
+        // Retrieve all users
+        let user = await UserModel.findOne({ _id: userId });
+
+        if (!user) {
+            console.log(`No user found with id: ${userId}`);
+            socket.emit('error', 'No user found with that id.');
+            return;
+        }
+
+        socket.emit('user_get', user);
+    });
+
     // JOINS a specific group based on a group id,
     // CHECKS if group and user exists, and if user
     // has already joined
@@ -433,6 +447,48 @@ io.on('connection', (socket) => {
 
                 // Return the new name to the client
                 io.emit('group_edit', groups);
+            } catch (err) {
+                console.error(err.message);
+                socket.emit('error', err.message);
+            }
+        }
+    );
+
+    socket.on(
+        'user_edit',
+        async ({ userId, newName, newEmail, newUrl, newPassword }) => {
+            try {
+                let user = await UserModel.findOne({ _id: userId });
+                if (!user) {
+                    console.error('User account does not exist.');
+                    socket.emit('error', 'User account does not exist.');
+                    return;
+                }
+
+                if (newName !== user.username) {
+                    user.username = newName;
+                }
+                if (newEmail !== user.email) {
+                    user.email = newEmail;
+                }
+                if (newUrl !== user.avatar) {
+                    user.avatar = newUrl;
+                }
+                // this needs to be decrypted before conditional
+                // if (newPassword !== user.password) {
+                //     user.password = newPassword;
+                // }
+                await user.save();
+
+                console.log(`User successfully updated --- ${user}`);
+
+                let users = await UserModel.find({});
+                if (!users) {
+                    socket.emit('error', 'Could not get users.');
+                    return;
+                }
+
+                io.emit('user_edit', users);
             } catch (err) {
                 console.error(err.message);
                 socket.emit('error', err.message);

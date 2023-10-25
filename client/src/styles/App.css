@@ -221,6 +221,18 @@ input[type='checkbox']:checked ~ span:nth-of-type(3) {
     text-decoration: none;
     font-size: 20px;
 }
+
+.viewUserPage {
+    border-radius: 5px;
+    padding: 10px;
+    background: #282c34;
+    color: white;
+    border: none;
+    box-shadow: 1px 2px 5px 2px #12121247;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+}
 /* END OF LANDING PAGE */
 
 /* LOGIN PAGE */
@@ -252,6 +264,18 @@ input {
     /* color: white; */
     text-align: center;
     width: 265px;
+}
+
+.userInfoContainer {
+    background-color: #b6b6b688;
+    border-radius: 10px;
+    position: fixed;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
 }
 
 .registerContainer input {

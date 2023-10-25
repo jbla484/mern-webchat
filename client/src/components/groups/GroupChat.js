@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import socket from '../../socket/socket';
 import EmojiPicker from 'emoji-picker-react';
 
@@ -9,9 +9,22 @@ function GroupChat({ user, setUser }) {
     const messagesEndRef = useRef(null);
     const [message, setMessage] = useState('');
 
+    const userInfoModal = useRef(null);
+
     const [groupInfo, setGroupInfo] = useState({
         group: {},
         groupMessages: [],
+    });
+
+    const [userInfo, setUserInfo] = useState({
+        visible: false,
+        clickedX: 0,
+        clickedY: 0,
+    });
+
+    const [clickPos, setClickPos] = useState({
+        clickedX: 0,
+        clickedY: 0,
     });
 
     const [settingsVisible, setSettingsVisible] = useState(false);
@@ -67,6 +80,22 @@ function GroupChat({ user, setUser }) {
         return time.join(''); // return adjusted time or original string
     }
 
+    function addNewMessage() {
+        if (message === '') {
+            return;
+        }
+
+        const newMessage = {
+            username: user.username,
+            message,
+            userId: user._id,
+            groupId: id,
+        };
+
+        socket.emit('group_message_add', newMessage);
+        setMessage('');
+    }
+
     function onGroupGet(group) {
         setGroupInfo((groupInfo) => ({
             ...groupInfo,
@@ -92,6 +121,20 @@ function GroupChat({ user, setUser }) {
         navigate('/groups');
     }
 
+    function onUserGet(user) {
+        console.log('first', userInfo);
+        setUserInfo({
+            ...user,
+            visible: !userInfo.visible,
+        });
+        console.log('second', userInfo);
+    }
+
+    function hideUserInfo(event) {
+        // event.st;
+        // keep state within each chat components to switch show / hide
+    }
+
     useEffect(() => {
         socket.on('group_get', onGroupGet);
         socket.on('group_message_add', onGroupMessages);
@@ -99,12 +142,46 @@ function GroupChat({ user, setUser }) {
 
         socket.emit('group_get', id);
 
+        socket.on('user_get', onUserGet);
+
         return function cleanup() {
             socket.removeListener('group_get');
             socket.removeListener('group_message_add');
             socket.removeListener('group_leave');
+
+            socket.removeListener('user_get');
         };
     }, []);
+
+    function toggleUser(userId) {
+        console.log(`toggle user`, userId);
+        socket.emit('user_get', userId);
+    }
+
+    function printMousePos(event) {
+        if (event.clientX > window.innerWidth / 2) {
+            setClickPos({
+                clickedX: event.clientX,
+                clickedY: event.clientY,
+            });
+        } else {
+            setClickPos({ clickedX: event.clientX, clickedY: event.clientY });
+        }
+        console.log(window.innerWidth, event.clientX);
+        // if greater than half width, then set right to click, left to 0
+
+        // const userModal = userInfoModal.current;
+        // userModal.style.left = `${event.clientX}`;
+        // userModal.style.top = `${event.clientY}`;
+        // console.log(event.clientX, event.clientY);
+    }
+
+    const options = {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+    };
 
     useEffect(() => {
         scrollToBottom();
@@ -112,7 +189,13 @@ function GroupChat({ user, setUser }) {
 
     return (
         <header id='App-header3'>
-            <div className='messageGroup'>
+            <div
+                className='messageGroup'
+                onClick={(e) => {
+                    e.stopPropagation();
+                    hideUserInfo(e);
+                }}
+            >
                 <div
                     className='groupChatHeader'
                     onClick={(e) => {
@@ -179,15 +262,41 @@ function GroupChat({ user, setUser }) {
                 )}
             </div>
 
-            <div
-                className='messageBody'
-                style={
-                    {
-                        // position: 'relative',
-                        // transform: 'translateZ(0)',
-                    }
-                }
-            >
+            <div className='messageBody'>
+                {userInfo.visible && (
+                    <div
+                        className='userInfoContainer'
+                        ref={userInfoModal}
+                        style={{
+                            left: clickPos.clickedX + 'px',
+                            top: clickPos.clickedY + 'px',
+                        }}
+                    >
+                        <img
+                            src={userInfo.avatar}
+                            height={'60px'}
+                            width={'60px'}
+                            alt='group'
+                            style={{ borderRadius: '15px' }}
+                        ></img>
+                        <h3>{userInfo.username}</h3>
+                        <p>
+                            Created:{' '}
+                            {new Date(userInfo.created).toLocaleDateString(
+                                undefined,
+                                options
+                            )}
+                        </p>
+                        <p>Ranking: {userInfo.ranking}</p>
+                        {/* <p>Role: {userInfo.ranking}</p> */}
+                        <Link
+                            to={`/users/${userInfo._id}/info`}
+                            className='viewUserPage'
+                        >
+                            View Page
+                        </Link>
+                    </div>
+                )}
                 {groupInfo.groupMessages ? (
                     groupInfo.groupMessages.map((message, i) => {
                         return (
@@ -205,6 +314,10 @@ function GroupChat({ user, setUser }) {
                                             ? 'incomingMessageUser'
                                             : 'incomingMessageOther'
                                     }
+                                    onClick={(e) => {
+                                        toggleUser(message.userId);
+                                        printMousePos(e);
+                                    }}
                                 >
                                     <div
                                         style={{
@@ -281,15 +394,8 @@ function GroupChat({ user, setUser }) {
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    const newMessage = {
-                        username: user.username,
-                        message,
-                        userId: user._id,
-                        groupId: id,
-                    };
 
-                    socket.emit('group_message_add', newMessage);
-                    setMessage('');
+                    addNewMessage();
                 }}
                 style={{ width: '100%' }}
             >
@@ -315,16 +421,9 @@ function GroupChat({ user, setUser }) {
                     ></input>
                     <div
                         className='sendButton'
-                        onClick={() => {
-                            const newMessage = {
-                                username: user.username,
-                                message,
-                                userId: user._id,
-                                groupId: id,
-                            };
-
-                            socket.emit('group_message_add', newMessage);
-                            setMessage('');
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            addNewMessage();
                         }}
                     >
                         <i className='fa-regular fa-paper-plane hover'></i>
