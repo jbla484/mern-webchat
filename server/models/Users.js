@@ -28,9 +28,9 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: new Date(),
     },
-    ranking: {
-        type: Number,
-        default: 0,
+    role: {
+        type: String,
+        default: 'user',
     },
 });
 

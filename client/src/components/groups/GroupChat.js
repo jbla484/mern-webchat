@@ -3,6 +3,8 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import socket from '../../socket/socket';
 import EmojiPicker from 'emoji-picker-react';
 
+import GroupChatMessage from './GroupChatMessage';
+
 function GroupChat({ user, setUser }) {
     let navigate = useNavigate();
     const { id } = useParams();
@@ -158,24 +160,6 @@ function GroupChat({ user, setUser }) {
         socket.emit('user_get', userId);
     }
 
-    function printMousePos(event) {
-        if (event.clientX > window.innerWidth / 2) {
-            setClickPos({
-                clickedX: event.clientX,
-                clickedY: event.clientY,
-            });
-        } else {
-            setClickPos({ clickedX: event.clientX, clickedY: event.clientY });
-        }
-        console.log(window.innerWidth, event.clientX);
-        // if greater than half width, then set right to click, left to 0
-
-        // const userModal = userInfoModal.current;
-        // userModal.style.left = `${event.clientX}`;
-        // userModal.style.top = `${event.clientY}`;
-        // console.log(event.clientX, event.clientY);
-    }
-
     const options = {
         weekday: 'short',
         year: 'numeric',
@@ -279,15 +263,19 @@ function GroupChat({ user, setUser }) {
                             alt='group'
                             style={{ borderRadius: '15px' }}
                         ></img>
-                        <h3>{userInfo.username}</h3>
-                        <p>
+                        <h3 style={{ margin: '15px 0 0 0' }}>
+                            {userInfo.username}
+                        </h3>
+                        <p style={{ margin: '10px 0 5px 0' }}>
                             Created:{' '}
                             {new Date(userInfo.created).toLocaleDateString(
                                 undefined,
                                 options
                             )}
                         </p>
-                        <p>Ranking: {userInfo.ranking}</p>
+                        <p style={{ margin: '5px 0 10px 0' }}>
+                            Role: {userInfo.ranking}
+                        </p>
                         {/* <p>Role: {userInfo.ranking}</p> */}
                         <Link
                             to={`/users/${userInfo._id}/info`}
@@ -300,80 +288,13 @@ function GroupChat({ user, setUser }) {
                 {groupInfo.groupMessages ? (
                     groupInfo.groupMessages.map((message, i) => {
                         return (
-                            <div
-                                className={
-                                    message.userId === user._id
-                                        ? 'textRight'
-                                        : ''
-                                }
-                                key={i}
-                            >
-                                <div
-                                    className={
-                                        message.userId === user._id
-                                            ? 'incomingMessageUser'
-                                            : 'incomingMessageOther'
-                                    }
-                                    onClick={(e) => {
-                                        toggleUser(message.userId);
-                                        printMousePos(e);
-                                    }}
-                                >
-                                    <div
-                                        style={{
-                                            display: 'inline-block',
-                                        }}
-                                    >
-                                        <img
-                                            src={message.avatar}
-                                            height={'40px'}
-                                            width={'40px'}
-                                            alt='profile'
-                                            style={{
-                                                borderRadius: '10px',
-                                                marginRight: '10px',
-                                            }}
-                                        ></img>
-                                    </div>
-                                    <div
-                                        style={{
-                                            display: 'inline-block',
-                                        }}
-                                    >
-                                        <h3
-                                            style={{
-                                                padding: '0px',
-                                                margin: '0',
-                                            }}
-                                        >
-                                            {message.username}
-                                        </h3>
-                                        <p
-                                            style={{
-                                                padding: '0px',
-                                                margin: '0',
-                                            }}
-                                        >
-                                            {message.message}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div
-                                    className={
-                                        message.userId === user._id
-                                            ? 'incomingMessageTimeUser'
-                                            : 'incomingMessageTimeOther'
-                                    }
-                                >
-                                    <div>
-                                        {tConvert(
-                                            dateReadable(
-                                                new Date(message.created)
-                                            )
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
+                            <GroupChatMessage
+                                user={user}
+                                message={message}
+                                i={i}
+                                toggleUser={toggleUser}
+                                setClickPos={setClickPos}
+                            />
                         );
                     })
                 ) : (

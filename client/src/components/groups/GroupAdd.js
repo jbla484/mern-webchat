@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 import socket from '../../socket/socket';
 
-function GroupAdd({ user }) {
+export default function GroupAdd({ user }) {
     let navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
@@ -137,5 +137,3 @@ function GroupAdd({ user }) {
         </header>
     );
 }
-
-export default GroupAdd;
