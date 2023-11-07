@@ -108,6 +108,8 @@ export default function GroupChatMessage({
                         style={{
                             padding: '0px',
                             margin: '0',
+                            wordWrap: 'break-word',
+                            maxWidth: '100%',
                         }}
                     >
                         {message.message}

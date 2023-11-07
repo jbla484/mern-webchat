@@ -266,6 +266,55 @@ input {
     width: 265px;
 }
 
+.navMenu {
+    background-color: #282c34;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+}
+
+.navMenuItem {
+    padding: 20px 0;
+}
+
+.slidedown {
+    animation-name: slide-down;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes slide-down {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slideup {
+    animation-name: slide-up;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes slide-up {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
 .userInfoContainer {
     background-color: #ffffff;
     border-radius: 10px;
@@ -278,6 +327,17 @@ input {
     padding: 20px;
     border: 1px solid rgba(192, 192, 192, 0.297);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.userContainer {
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 15px;
+    border-radius: 10px;
 }
 
 .registerContainer input {

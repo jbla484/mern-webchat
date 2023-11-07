@@ -55,7 +55,6 @@ function Home() {
             ...serverInfo,
             listOfOpenGroups: groups,
         }));
-        console.log('onGroupCreate');
     }
 
     function onError(arg) {
@@ -63,9 +62,6 @@ function Home() {
     }
 
     function onUserLogin(arg) {
-        console.log('onUserLogin');
-        console.log(arg);
-
         setUserInfo((userInfo) => ({
             ...userInfo,
             userId: arg._id,
@@ -80,7 +76,6 @@ function Home() {
     }
 
     function onUserRegister(arg) {
-        console.log(`Created user: ${arg.username}, ${arg._id}`);
         setUserInfo((userInfo) => ({
             ...userInfo,
             currentPage: 'login',
@@ -88,8 +83,6 @@ function Home() {
     }
 
     function onGroupGet(arg) {
-        console.log('Groups get:');
-        console.log(arg);
         setServerInfo((serverInfo) => ({
             ...serverInfo,
             listOfOpenGroups: arg,
@@ -97,7 +90,6 @@ function Home() {
     }
 
     function onGroupJoin(arg) {
-        console.log(arg);
         setServerInfo((serverInfo) => ({
             ...serverInfo,
             listOfJoinedGroups: arg,
@@ -105,7 +97,6 @@ function Home() {
     }
 
     function onGroupMessagesGet(arg) {
-        console.log(arg);
         setServerInfo((serverInfo) => ({
             ...serverInfo,
             listOfMessages: arg,
@@ -113,7 +104,6 @@ function Home() {
     }
 
     function onGroupEditName(arg) {
-        console.log(arg);
         setServerInfo((serverInfo) => ({
             ...serverInfo,
             listOfOpenGroups: arg,
@@ -121,7 +111,6 @@ function Home() {
     }
 
     function onGroupEditImage(arg) {
-        console.log(arg);
         setServerInfo((serverInfo) => ({
             ...serverInfo,
             listOfOpenGroups: arg,
@@ -234,8 +223,6 @@ function Home() {
             ...userInfo,
             groupSettingsVisible: value,
         }));
-
-        console.log(userInfo);
     }
 
     function dateReadable(date) {
@@ -277,8 +264,6 @@ function Home() {
             newName: formData.name,
         };
 
-        console.log(info);
-
         socket.emit('group_edit_name', info);
     }
 
@@ -290,8 +275,6 @@ function Home() {
             groupId: userInfo.selectedGroupId,
             newUrl: formData.url,
         };
-
-        console.log(info);
 
         socket.emit('group_edit_image', info);
     }

@@ -104,6 +104,17 @@ io.on('connection', (socket) => {
         socket.emit('groups_get', groups);
     });
 
+    // GETS all users
+    socket.on('users_get', async () => {
+        let users = await UserModel.find({});
+
+        if (!users) {
+            socket.emit('error', 'Error retrieving users from database.');
+            return;
+        }
+        socket.emit('users_get', users);
+    });
+
     // CREATES a new group
     socket.on('group_create', async ({ name, owner, avatar, description }) => {
         try {

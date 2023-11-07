@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 import socket from '../../socket/socket';
 
-export default function UserInfo() {
+export default function UserInfo({ loggedInUser }) {
     let navigate = useNavigate();
     const { id } = useParams();
 
@@ -11,7 +11,6 @@ export default function UserInfo() {
     const [error, setError] = useState('');
 
     function onUserGet(user) {
-        console.log(user);
         setUser(user);
     }
 
@@ -99,12 +98,14 @@ export default function UserInfo() {
                     </div>
                 )}
 
-                <Link
-                    className='joinLink'
-                    to={`/users/${id}/edit`}
-                >
-                    Edit User
-                </Link>
+                {loggedInUser._id === user._id && (
+                    <Link
+                        className='joinLink'
+                        to={`/users/${id}/edit`}
+                    >
+                        Edit User
+                    </Link>
+                )}
             </div>
         </header>
     );

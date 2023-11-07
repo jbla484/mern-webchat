@@ -75,7 +75,7 @@ function GroupInfo({ user, setUser }) {
                 </div>
                 <div
                     className='width802'
-                    style={{ textAlign: 'left', width: '100%' }}
+                    style={{ textAlign: 'left' }}
                 >
                     <div>
                         <b>Owner:</b> <span>{groupOwner.username}</span>
@@ -106,20 +106,21 @@ function GroupInfo({ user, setUser }) {
                         </p>
                     </div>
                 )}
-
-                <Link
-                    className='joinLink'
-                    onClick={(e) => {
-                        const obj = {
-                            userId: user._id,
-                            groupId: id,
-                        };
-                        socket.emit('group_delete', obj);
-                    }}
-                    style={{ marginTop: '15px' }}
-                >
-                    Delete Group
-                </Link>
+                {user._id === groupOwner._id && (
+                    <Link
+                        className='joinLink'
+                        onClick={(e) => {
+                            const obj = {
+                                userId: user._id,
+                                groupId: id,
+                            };
+                            socket.emit('group_delete', obj);
+                        }}
+                        style={{ marginTop: '15px' }}
+                    >
+                        Delete Group
+                    </Link>
+                )}
             </div>
         </header>
     );

@@ -72,8 +72,6 @@ export default function GroupJoin({ user, setUser }) {
                             userId: user._id,
                             groupId: id,
                         };
-                        console.log('group_join');
-                        console.log(info);
 
                         socket.emit('group_join', info);
                     }}

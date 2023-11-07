@@ -36,12 +36,10 @@ function Register() {
     }
 
     function onUserRegister(arg) {
-        console.log(`Created user: ${arg.username}, ${arg._id}`);
         navigate('/login');
     }
 
     function onError(error) {
-        console.log(error);
         document.getElementById('errorMessage').innerHTML = error;
         document.getElementById('errorMessage').style.display = 'block';
     }

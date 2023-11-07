@@ -36,7 +36,7 @@ function Leaderboards() {
         <header id='App-header'>
             <h1
                 style={{
-                    margin: '20px 0 0 0',
+                    margin: '20px 0',
                 }}
             >
                 Leaderboards
@@ -44,41 +44,28 @@ function Leaderboards() {
             {groups.map((group) => {
                 return (
                     <div
-                        className='joinContainer'
+                        className='userContainer'
                         key={group._id}
-                        style={{ margin: '40px 0 20px 0' }}
+                        style={{ margin: '10px 0' }}
                     >
                         <img
                             src={group.avatar}
-                            height={'100px'}
-                            width={'100px'}
+                            height={'50px'}
+                            width={'50px'}
                             alt='group'
-                            style={{ borderRadius: '20px' }}
+                            style={{
+                                borderRadius: '15px',
+                                marginRight: '15px',
+                            }}
                         ></img>
-                        <h2>{group.name}</h2>
+
                         <div
                             className='width802'
-                            style={{ textAlign: 'left', width: '100%' }}
+                            style={{ textAlign: 'left' }}
                         >
+                            <h4 style={{ margin: '0' }}>{group.name}</h4>
                             <div>
-                                <b>User Count:</b>{' '}
-                                <span>{group.users?.length}</span>
-                            </div>
-                            <div>
-                                <b>Message Count:</b>{' '}
-                                <span>{group.messages?.length}</span>
-                            </div>
-                            <div>
-                                <b>Created:</b>{' '}
-                                <span>
-                                    {new Date(group.created).toLocaleDateString(
-                                        undefined,
-                                        options
-                                    )}
-                                </span>
-                            </div>
-                            <div>
-                                <b>Ranking:</b> <span>{group.ranking}</span>
+                                Rank: <span>{group.ranking}</span>
                             </div>
                         </div>
                     </div>

@@ -104,7 +104,6 @@ function GroupChat({ user, setUser }) {
             group,
             groupMessages: group.messages,
         }));
-        console.log('group');
     }
 
     function onGroupMessages(messages) {
@@ -112,7 +111,6 @@ function GroupChat({ user, setUser }) {
             ...groupInfo,
             groupMessages: messages,
         }));
-        console.log('group message');
     }
 
     function onGroupLeave(joinedGroups) {
@@ -124,12 +122,10 @@ function GroupChat({ user, setUser }) {
     }
 
     function onUserGet(user) {
-        console.log('first', userInfo);
         setUserInfo({
             ...user,
             visible: !userInfo.visible,
         });
-        console.log('second', userInfo);
     }
 
     function hideUserInfo(event) {
@@ -156,7 +152,6 @@ function GroupChat({ user, setUser }) {
     }, []);
 
     function toggleUser(userId) {
-        console.log(`toggle user`, userId);
         socket.emit('user_get', userId);
     }
 
@@ -294,6 +289,7 @@ function GroupChat({ user, setUser }) {
                                 i={i}
                                 toggleUser={toggleUser}
                                 setClickPos={setClickPos}
+                                key={i}
                             />
                         );
                     })

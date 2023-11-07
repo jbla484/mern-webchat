@@ -81,19 +81,16 @@ export default function UserEdit() {
                 newUrl: user.avatar,
                 newPassword: newPassword.password,
             };
-            console.log(info);
             socket.emit('user_edit', info);
         }
     }
 
     function onError(error) {
-        console.log(error);
         document.getElementById('errorMessage').innerHTML = error;
         document.getElementById('errorMessage').style.display = 'block';
     }
 
     function onUserEdit(arg) {
-        console.log(arg);
         navigate(`/users/${id}/info`);
     }
 

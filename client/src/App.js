@@ -19,6 +19,7 @@ import GroupEdit from './components/groups/GroupEdit';
 // User components
 import UserInfo from './components/users/UserInfo';
 import UserEdit from './components/users/UserEdit';
+import Users from './components/Users';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -48,7 +49,10 @@ function App() {
 
     return (
         <BrowserRouter>
-            <Navbar user={user} />
+            <Navbar
+                user={user}
+                setUser={setUser}
+            />
             <Routes>
                 <Route
                     index
@@ -68,6 +72,11 @@ function App() {
                     exact
                     path='/leaderboards'
                     element={<Leaderboards />}
+                />
+                <Route
+                    exact
+                    path='/users'
+                    element={<Users />}
                 />
                 <Route
                     exact
@@ -132,7 +141,7 @@ function App() {
                 <Route
                     exact
                     path='/users/:id/info'
-                    element={<UserInfo />}
+                    element={<UserInfo loggedInUser={user} />}
                 />
                 <Route
                     exact

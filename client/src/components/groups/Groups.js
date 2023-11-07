@@ -17,7 +17,6 @@ function Groups({ user }) {
     });
 
     function onGroupGet(groups) {
-        console.log(groups);
         setGroupInfo((groupInfo) => ({
             ...groupInfo,
             listOfOpenGroups: groups,

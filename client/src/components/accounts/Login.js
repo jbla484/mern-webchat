@@ -41,7 +41,6 @@ function Login({ setUser }) {
     }
 
     function onError(error) {
-        console.log(error);
         document.getElementById('errorMessage').innerHTML = error;
         document.getElementById('errorMessage').style.display = 'block';
     }

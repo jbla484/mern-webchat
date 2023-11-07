@@ -38,18 +38,15 @@ function GroupEdit({ user, setUser }) {
             newDescription: group.description,
         };
 
-        console.log(info);
         socket.emit('group_edit', info);
     }
 
     function onError(error) {
-        console.log(error);
         document.getElementById('errorMessage').innerHTML = error;
         document.getElementById('errorMessage').style.display = 'block';
     }
 
     function onGroupEdit(arg) {
-        console.log(arg);
         navigate(`/groups/${id}/chat`);
     }
 
