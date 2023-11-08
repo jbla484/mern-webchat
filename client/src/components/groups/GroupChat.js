@@ -20,8 +20,6 @@ function GroupChat({ user, setUser }) {
 
     const [userInfo, setUserInfo] = useState({
         visible: false,
-        clickedX: 0,
-        clickedY: 0,
     });
 
     const [clickPos, setClickPos] = useState({
@@ -36,17 +34,11 @@ function GroupChat({ user, setUser }) {
         messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
     };
 
-    function dateReadable(date) {
-        return (
-            ('00' + date.getHours()).slice(-2) +
-            ':' +
-            ('00' + date.getMinutes()).slice(-2)
-        );
-    }
-
     async function onLeaveGroup(e) {
         e.preventDefault();
-        if (!user._id) console.error('Please login!'); //
+        if (!user._id) {
+            console.error('Please login!');
+        }
 
         const info = {
             userId: user._id,
@@ -62,30 +54,13 @@ function GroupChat({ user, setUser }) {
                 message +
                 (emojiData.isCustom ? emojiData.unified : emojiData.emoji)
         );
-        // console.log(event);
+
         document.getElementById('sendInput').focus();
         document.getElementById('sendInput').setSelectionRange(-1, -1);
     }
 
-    function tConvert(time) {
-        // Check correct time format and split into components
-        time = time
-            .toString()
-            .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-        if (time.length > 1) {
-            // If time format correct
-            time = time.slice(1); // Remove full string match value
-            time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
-            time[0] = +time[0] % 12 || 12; // Adjust hours
-        }
-        return time.join(''); // return adjusted time or original string
-    }
-
     function addNewMessage() {
-        if (message === '') {
-            return;
-        }
+        if (message === '') return;
 
         const newMessage = {
             username: user.username,
@@ -122,6 +97,7 @@ function GroupChat({ user, setUser }) {
     }
 
     function onUserGet(user) {
+        console.log(userInfo.visible);
         setUserInfo({
             ...user,
             visible: !userInfo.visible,

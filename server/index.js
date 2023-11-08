@@ -534,22 +534,22 @@ io.on('connection', (socket) => {
         }
     });
 
-    socket.on('user_get', async (userId) => {
-        try {
-            let user = await UserModel.findOne({ _id: userId });
+    // socket.on('user_get', async (userId) => {
+    //     try {
+    //         let user = await UserModel.findOne({ _id: userId });
 
-            if (!user) {
-                console.log(`User account does not exist.`);
-                socket.emit('error', `User account does not exist.`);
-                return;
-            }
+    //         if (!user) {
+    //             console.log(`User account does not exist.`);
+    //             socket.emit('error', `User account does not exist.`);
+    //             return;
+    //         }
 
-            socket.emit('user_get', user);
-        } catch (err) {
-            console.error(err.message);
-            socket.emit('error', err.message);
-        }
-    });
+    //         socket.emit('user_get', user);
+    //     } catch (err) {
+    //         console.error(err.message);
+    //         socket.emit('error', err.message);
+    //     }
+    // });
 
     socket.on('user_register', async ({ username, email, password }) => {
         try {
