@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 export default function GroupChatMessage({
     user,
     message,
@@ -5,6 +7,8 @@ export default function GroupChatMessage({
     toggleUser,
     setClickPos,
 }) {
+    const [visible, setVisible] = useState(false);
+
     function dateReadable(date) {
         return (
             ('00' + date.getHours()).slice(-2) +
@@ -60,10 +64,7 @@ export default function GroupChatMessage({
     }
 
     return (
-        <div
-            className={message.userId === user._id ? 'textRight' : ''}
-            key={i}
-        >
+        <div className={message.userId === user._id ? 'textRight' : ''} key={i}>
             <div
                 className={
                     message.userId === user._id
@@ -71,7 +72,8 @@ export default function GroupChatMessage({
                         : 'incomingMessageOther'
                 }
                 onClick={(e) => {
-                    toggleUser(message.userId);
+                    setVisible(!visible);
+                    toggleUser(message.userId, !visible);
                     printMousePos(e);
                 }}
             >

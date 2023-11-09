@@ -19,7 +19,7 @@ import GroupEdit from './components/groups/GroupEdit';
 // User components
 import UserInfo from './components/users/UserInfo';
 import UserEdit from './components/users/UserEdit';
-import Users from './components/Users';
+import Users from './components/users/Users';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -49,49 +49,22 @@ function App() {
 
     return (
         <BrowserRouter>
-            <Navbar
-                user={user}
-                setUser={setUser}
-            />
+            <Navbar user={user} setUser={setUser} />
             <Routes>
-                <Route
-                    index
-                    element={<Landing />}
-                />
+                <Route index element={<Landing />} />
                 <Route
                     exact
                     path='/login'
                     element={<Login setUser={setUser} />}
                 />
-                <Route
-                    exact
-                    path='/register'
-                    element={<Register />}
-                />
-                <Route
-                    exact
-                    path='/leaderboards'
-                    element={<Leaderboards />}
-                />
-                <Route
-                    exact
-                    path='/users'
-                    element={<Users />}
-                />
-                <Route
-                    exact
-                    path='/dashboard'
-                    element={<Dashboard />}
-                />
+                <Route exact path='/register' element={<Register />} />
+                <Route exact path='/leaderboards' element={<Leaderboards />} />
+                <Route exact path='/users' element={<Users />} />
+                <Route exact path='/dashboard' element={<Dashboard />} />
                 <Route
                     exact
                     path='/groups'
-                    element={
-                        <Groups
-                            user={user}
-                            setGroup={setGroup}
-                        />
-                    }
+                    element={<Groups user={user} setGroup={setGroup} />}
                 />
                 <Route
                     exact
@@ -101,53 +74,29 @@ function App() {
                 <Route
                     exact
                     path='/groups/:id/info'
-                    element={
-                        <GroupInfo
-                            setUser={setUser}
-                            user={user}
-                        />
-                    }
+                    element={<GroupInfo setUser={setUser} user={user} />}
                 />
                 <Route
                     exact
                     path='/groups/:id/chat'
-                    element={
-                        <GroupChat
-                            setUser={setUser}
-                            user={user}
-                        />
-                    }
+                    element={<GroupChat setUser={setUser} user={user} />}
                 />
                 <Route
                     exact
                     path='/groups/:id/edit'
-                    element={
-                        <GroupEdit
-                            setUser={setUser}
-                            user={user}
-                        />
-                    }
+                    element={<GroupEdit setUser={setUser} user={user} />}
                 />
                 <Route
                     exact
                     path='/groups/:id/join'
-                    element={
-                        <GroupJoin
-                            setUser={setUser}
-                            user={user}
-                        />
-                    }
+                    element={<GroupJoin setUser={setUser} user={user} />}
                 />
                 <Route
                     exact
                     path='/users/:id/info'
                     element={<UserInfo loggedInUser={user} />}
                 />
-                <Route
-                    exact
-                    path='/users/:id/edit'
-                    element={<UserEdit />}
-                />
+                <Route exact path='/users/:id/edit' element={<UserEdit />} />
             </Routes>
         </BrowserRouter>
     );

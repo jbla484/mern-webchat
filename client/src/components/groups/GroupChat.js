@@ -18,9 +18,9 @@ function GroupChat({ user, setUser }) {
         groupMessages: [],
     });
 
-    const [userInfo, setUserInfo] = useState({
-        visible: false,
-    });
+    const [userInfo, setUserInfo] = useState({});
+
+    const [userInfoVisible, setUserInfoVisible] = useState(false);
 
     const [clickPos, setClickPos] = useState({
         clickedX: 0,
@@ -97,10 +97,8 @@ function GroupChat({ user, setUser }) {
     }
 
     function onUserGet(user) {
-        console.log(userInfo.visible);
         setUserInfo({
             ...user,
-            visible: !userInfo.visible,
         });
     }
 
@@ -127,7 +125,10 @@ function GroupChat({ user, setUser }) {
         };
     }, []);
 
-    function toggleUser(userId) {
+    function toggleUser(userId, visible) {
+        //setUserInfoVisible(visible);
+        setUserInfoVisible(!userInfoVisible);
+
         socket.emit('user_get', userId);
     }
 
@@ -218,7 +219,7 @@ function GroupChat({ user, setUser }) {
             </div>
 
             <div className='messageBody'>
-                {userInfo.visible && (
+                {userInfoVisible && (
                     <div
                         className='userInfoContainer'
                         ref={userInfoModal}
@@ -278,10 +279,7 @@ function GroupChat({ user, setUser }) {
                         autoFocusSearch={false}
                     />
                 )}
-                <div
-                    className='scroll'
-                    ref={messagesEndRef}
-                />
+                <div className='scroll' ref={messagesEndRef} />
             </div>
 
             <form

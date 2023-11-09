@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import socket from '../socket/socket';
+import socket from '../../socket/socket';
 import { useNavigate } from 'react-router-dom';
 
 export default function Users() {
@@ -44,6 +44,9 @@ export default function Users() {
                         className='userContainer'
                         key={user._id}
                         style={{ margin: '10px 0' }}
+                        onClick={(e) => {
+                            navigate(`/groups/${user._id}/info`);
+                        }}
                     >
                         <img
                             src={user.avatar}
