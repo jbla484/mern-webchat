@@ -13,6 +13,12 @@ body {
     padding: 0;
     height: calc(100% - 60px);
     /* height: 100%; */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 .App-logo {
@@ -473,6 +479,7 @@ input {
 
 .column3image {
     flex: 0 0 5%;
+    flex-grow: 1;
 }
 
 .column2 {
@@ -711,6 +718,7 @@ input {
     width: 100%;
     display: block;
     overflow: hidden;
+    flex-grow: 5;
 }
 
 #togglePassword {
@@ -732,7 +740,7 @@ input {
 .messageUser2messageTime {
     flex: 0 0 20%;
     text-align: right;
-
+    flex-shrink: 2;
     padding: 10px 0;
 }
 
@@ -767,3 +775,21 @@ input {
         background-color: lightgreen;
     }
 }
+
+
+
+.element {
+    display: inline-flex;
+    align-items: center;
+  }
+  i.fa-camera {
+    margin: 10px;
+    cursor: pointer;
+    font-size: 30px;
+  }
+  i:hover {
+    opacity: 0.6;
+  }
+  #attatachment {
+    display: none;
+  }

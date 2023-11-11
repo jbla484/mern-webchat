@@ -47,6 +47,9 @@ function Leaderboards() {
                         className='userContainer'
                         key={group._id}
                         style={{ margin: '10px 0' }}
+                        onClick={(e) => {
+                            navigate(`/groups/${group._id}/info`);
+                        }}
                     >
                         <img
                             src={group.avatar}
@@ -59,10 +62,7 @@ function Leaderboards() {
                             }}
                         ></img>
 
-                        <div
-                            className='width802'
-                            style={{ textAlign: 'left' }}
-                        >
+                        <div className='width802' style={{ textAlign: 'left' }}>
                             <h4 style={{ margin: '0' }}>{group.name}</h4>
                             <div>
                                 Rank: <span>{group.ranking}</span>

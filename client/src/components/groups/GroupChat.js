@@ -10,8 +10,11 @@ function GroupChat({ user, setUser }) {
     const { id } = useParams();
     const messagesEndRef = useRef(null);
     const [message, setMessage] = useState('');
+    const [attachment, setAttachment] = useState(false);
 
     const userInfoModal = useRef(null);
+
+    const attatchmentRef = useRef(null);
 
     const [groupInfo, setGroupInfo] = useState({
         group: {},
@@ -290,6 +293,21 @@ function GroupChat({ user, setUser }) {
                 }}
                 style={{ width: '100%' }}
             >
+                {attachment && (
+                    <div
+                        style={{
+                            paddingTop: '5px',
+                            borderTop: '2px solid rgba(199, 199, 199, 0.384)',
+                        }}
+                    >
+                        <img
+                            id='attachmentPreview'
+                            width={'80px'}
+                            height={'80px'}
+                            alt='user attachment'
+                        ></img>
+                    </div>
+                )}
                 <div className='messageInput'>
                     <div
                         className='emojiButton'
@@ -300,8 +318,45 @@ function GroupChat({ user, setUser }) {
                         <i className='fa-regular fa-face-smile hover'></i>
                     </div>
                     <div className='attatchmentButton'>
-                        <i className='fa-solid fa-paperclip hover'></i>
+                        <link
+                            href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'
+                            rel='stylesheet'
+                        />
+                        <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+                        <div className='element'>
+                            <i
+                                className='fa-solid fa-paperclip hover'
+                                onClick={(e) => {
+                                    attatchmentRef.current.click();
+                                }}
+                            ></i>
+                            <input
+                                type='file'
+                                name=''
+                                id='attatachment'
+                                ref={attatchmentRef}
+                                accept='image/*'
+                                onChange={(e) => {
+                                    // todo
+                                    setAttachment(true);
+                                    var file =
+                                        document.getElementById('attatachment')
+                                            .files[0];
+                                    var fr = new FileReader();
+                                    fr.readAsDataURL(file);
+                                    fr.onload = function (e) {
+                                        var img =
+                                            document.getElementById(
+                                                'attachmentPreview'
+                                            );
+                                        img.src = this.result;
+                                        console.log(file);
+                                    };
+                                }}
+                            />
+                        </div>
                     </div>
+
                     <input
                         type='text'
                         placeholder='Type in your message'

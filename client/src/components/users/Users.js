@@ -45,7 +45,7 @@ export default function Users() {
                         key={user._id}
                         style={{ margin: '10px 0' }}
                         onClick={(e) => {
-                            navigate(`/groups/${user._id}/info`);
+                            navigate(`/users/${user._id}/info`);
                         }}
                     >
                         <img
